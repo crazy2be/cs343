@@ -7,11 +7,10 @@ _Task Parent {
     void main();
     Printer &printer;
     Bank &bank;
-    int numStudents;
-    int parentalDelay;
-    bool terminated;
+    int students;
+    int delay;
 public:
-    Parent(Printer & printer, Bank & bank, int numStudents, int parentalDelay)
-        : printer(printer), bank(bank), numStudents(numStudents), parentalDelay(parentalDelay), terminated(false) {}
-    ~Parent();
+    Parent(Printer & printer, Bank & bank, int students, int delay)
+        : printer(printer), bank(bank), students(students), delay(delay) {}
+    ~Parent() {}
 };

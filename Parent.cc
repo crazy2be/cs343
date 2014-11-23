@@ -5,9 +5,14 @@
 static MPRNG randGen;
 
 void Parent::main() {
-	//yield()
-}
+    while (true) {
+        _Accept(~Parent) {
+            break;
+        } _Else { }
 
-Parent::~Parent() {
-	terminated = true;
+        yield(delay);
+        int gift = randGen(1, 4); //Random number from 1 to 3.
+        int sid = randGen(students);
+        bank.deposit(sid, gift);
+    }
 }
