@@ -7,7 +7,8 @@ using namespace std;
 
 Printer::Printer(int numStudents, int numVendingMachines, int numCouriers)
         : numStudents(numStudents), numVendingMachines(numVendingMachines),
-            numCouriers(numCouriers) {
+            numCouriers(numCouriers), numOfEachKind{0, 1, 1, 1, 1, 1,
+                numStudents, numVendingMachines, numCouriers} {
     int n = 5 + numStudents + numVendingMachines + numCouriers;
     states.resize(n);
     reset();
@@ -31,7 +32,27 @@ void Printer::reset() {
         states[i] = PrintState();
     }
 }
-int PrintState::numVals() {
+int Printer::statesIndex(PrinterKind kind, int id) {
+    int off = 0;
+    dassert(kind < PrinterKind::NumKinds);
+    for (int k = 0; k < (int)kind; k++) {
+        off += numOfEachKind[k];
+    }
+    dassert(id >= 0);
+    dassert(id < numOfEachKind[(int)kind]);
+    return off + id;
+}
+PrinterKind Printer::kind(int statesIndex) {
+    int off = 0;
+    for (int k = 0; k < (int)PrinterKind::NumKinds; k++) {
+        if (off + numOfEachKind[k] > statesIndex) {
+            return (PrinterKind)k;
+        }
+        off += numOfEachKind[k];
+    }
+    dassert(false); // i out of range...
+}
+int PrintState::numVals(PrinterKind kind) {
     const static string NO_VALUE = "FWPLrR";
     const static string ONE_VALUE = "RPGVBS";
     const static string TWO_VALUE = "DCTNdUDSBt";
@@ -52,8 +73,8 @@ void Printer::flush() {
         PrintState state = states.at(i);
         if (state.changed) {
             cout << state.statec;
-            if (state.numVals() > 0) cout << " " << state.value1;
-            if (state.numVals() > 1) cout << "," << state.value2;
+            if (state.numVals(kind(i)) > 0) cout << " " << state.value1;
+            if (state.numVals(kind(i)) > 1) cout << "," << state.value2;
         }
         cout << "\t";
     }
@@ -69,21 +90,6 @@ void Printer::finishedFlush() {
     cout << endl;
     reset();
 }
-int Printer::statesIndex(PrinterKind kind, int id) {
-    switch (kind) {
-    case PrinterKind::Parent: return 0;
-    case PrinterKind::WATCardOffice: return 1;
-    case PrinterKind::NameServer: return 2;
-    case PrinterKind::Truck: return 3;
-    case PrinterKind::BottlingPlant: return 4;
-    case PrinterKind::Student: dassert(id < numStudents); return 5 + id;
-    case PrinterKind::Vending:
-        dassert(id < numVendingMachines); return 5 + numStudents + id;
-    case PrinterKind::Courier:
-        dassert(id < numCouriers); return 5 + numStudents + numVendingMachines;
-    default: dassert(false);
-    }
-}
 void Printer::printInternal(PrinterKind kind, int id, char statec,
                             int value1, int value2) {
     PrintState &state = states.at(statesIndex(kind, id));
@@ -95,19 +101,19 @@ void Printer::printInternal(PrinterKind kind, int id, char statec,
     if (statec == 'F') finishedFlush();
 }
 void Printer::print(PrinterKind kind, char statec) {
-    printInternal(kind, -1, statec, -1, -1);
+    printInternal(kind, 0, statec, -1, -1);
 }
 void Printer::print(PrinterKind kind, int id, char statec) {
     printInternal(kind, id, statec, -1, -1);
 }
 void Printer::print(PrinterKind kind, char statec, int value1) {
-    printInternal(kind, -1, statec, value1, -1);
+    printInternal(kind, 0, statec, value1, -1);
 }
 void Printer::print(PrinterKind kind, int id, char statec, int value1) {
     printInternal(kind, id, statec, value1, -1);
 }
 void Printer::print(PrinterKind kind, char statec, int value1, int value2) {
-    printInternal(kind, -1, statec, value1, value2);
+    printInternal(kind, 0, statec, value1, value2);
 }
 void Printer::print(PrinterKind kind, int id, char statec, int value1, int value2) {
     printInternal(kind, id, statec, value1, value2);

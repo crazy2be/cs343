@@ -3,29 +3,32 @@
 #include <vector>
 
 
-enum class PrinterKind {INVALID, Parent, WATCardOffice, NameServer, Truck,
-    BottlingPlant, Student, Vending, Courier};
+enum class PrinterKind {INVALID = 0, Parent, WATCardOffice, NameServer, Truck,
+    BottlingPlant, Student, Vending, Courier, NumKinds};
 
 struct PrintState {
     bool changed;
-    PrinterKind kind;
     char statec;
     int value1;
     int value2;
-    int numVals();
-    PrintState() : changed(false), kind(PrinterKind::INVALID), statec('?'),
-        value1(-1), value2(-1) {}
+    int numVals(PrinterKind kind);
+    PrintState() : changed(false), statec('?'), value1(-1), value2(-1) {}
 };
 
 _Monitor Printer { // or _Cormonitor
     std::vector<PrintState> states;
-    int numStudents;
-    int numVendingMachines;
-    int numCouriers;
     void reset();
     void flush();
     void finishedFlush();
+
+    int numStudents;
+    int numVendingMachines;
+    int numCouriers;
+
+    int numOfEachKind[(int)PrinterKind::NumKinds];
     int statesIndex(PrinterKind kind, int id);
+    PrinterKind kind(int statesIndex);
+
     void printInternal(PrinterKind kind, int id, char statec, int value1, int value2);
   public:
     Printer(int numStudents, int numVendingMachines, int numCouriers);
