@@ -1,11 +1,11 @@
+#include "Config.h"
+#include "debug.h"
+
 #include <iostream>
 #include <fstream>
 #include <limits>
 #include <vector>
 using namespace std;
-#include "Config.h"
-
-#define dassert(arg) assert(arg)
 
 static bool findNextName(ifstream &in, string &name) {
     for (;;) {

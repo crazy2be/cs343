@@ -1,9 +1,8 @@
 #include "WATCardOffice.h"
 #include "MPRNG.h"
+#include "debug.h"
 
 MPRNG randGen;
-
-#define dassert(arg) assert(arg)
 
 void WATCardOffice::Courier::main() {
     while (true) {

@@ -1,9 +1,8 @@
 #include "Printer.h"
+#include "debug.h"
 
 #include <iostream>
 using namespace std;
-
-#define dassert(arg) assert(arg)
 
 Printer::Printer(int numStudents, int numVendingMachines, int numCouriers)
         : numOfEachKind{0, 1, 1, 1, 1, 1, numStudents, numVendingMachines,
