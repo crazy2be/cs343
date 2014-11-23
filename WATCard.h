@@ -1,7 +1,7 @@
 #pragma once
 
 class WATCard {
-    WATCard(const WATCard &); // prevent copying
+    WATCard(const WATCard &) // prevent copying
     WATCard &operator=(const WATCard &);
   public:
     WATCard();
