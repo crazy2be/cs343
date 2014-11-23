@@ -21,10 +21,6 @@ _Monitor Printer { // or _Cormonitor
     void flush();
     void finishedFlush();
 
-    int numStudents;
-    int numVendingMachines;
-    int numCouriers;
-
     int numOfEachKind[(int)PrinterKind::NumKinds];
     int statesIndex(PrinterKind kind, int id);
     PrinterKind kind(int statesIndex);

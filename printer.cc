@@ -6,26 +6,25 @@ using namespace std;
 #define dassert(arg) assert(arg)
 
 Printer::Printer(int numStudents, int numVendingMachines, int numCouriers)
-        : numStudents(numStudents), numVendingMachines(numVendingMachines),
-            numCouriers(numCouriers), numOfEachKind{0, 1, 1, 1, 1, 1,
-                numStudents, numVendingMachines, numCouriers} {
-    int n = 5 + numStudents + numVendingMachines + numCouriers;
-    states.resize(n);
-    reset();
+        : numOfEachKind{0, 1, 1, 1, 1, 1, numStudents, numVendingMachines,
+            numCouriers} {
     cout << "Parent\t" << "WATOff\t" << "Names\t" << "Truck\t" << "Plant\t";
     for (int i = 0; i < numStudents; i++) cout << "Stud" << i << "\t";
     for (int i = 0; i < numVendingMachines; i++) cout << "Mach" << i << "\t";
     for (int i = 0; i < numCouriers; i++) cout << "Cour" << i << "\t";
     cout << endl;
 
+    int n = 5 + numStudents + numVendingMachines + numCouriers;
     for (int i = 0; i < n; i++) {
-        cout << "=======" << "\t";
+        cout << "*******" << "\t";
     }
     cout << endl;
+
+    states.resize(n);
+    reset();
 }
 Printer::~Printer() {
-    cout << "=================" << endl;
-    cout << "All tours started" << endl;
+    cout << "***********************" << endl;
 }
 void Printer::reset() {
     for (int i = 0; i < (int)states.size(); i++) {
