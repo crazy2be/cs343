@@ -1,13 +1,3 @@
-_Monitor MPRNG {
-    unsigned int seed_; 
-  public:
-    MPRNG( unsigned int seed = 1009 ) : seed_( seed ) { srand( seed ); } // set seed
-    unsigned int seed() { return seed_; }        // set seed
-    void seed( unsigned int seed ) { seed_ = seed; srand( seed ); } // set seed
-    unsigned int operator()() { return rand(); } // [0,UINT_MAX]
-    unsigned int operator()( unsigned int u ) { return operator()() % (u + 1); } // [0,u]
-    unsigned int operator()( unsigned int l, unsigned int u ) { return operator()( u - l ) + l; } // [l,u]
-}; // MPRNG
 
 SodaCost                2    # Manufacturer Suggested Retail Price (MSRP) per bottle
 NumStudents             2    # number of students to create
@@ -20,19 +10,6 @@ TimeBetweenShipments    3    # length of time between shipment pickup
 ParentalDelay           2    # length of time between new deposits of funds
 NumCouriers             1    # maximum number of couriers in the pool
 
-struct ConfigParms {
-    unsigned int sodaCost;                 // MSRP per bottle
-    unsigned int numStudents;              // number of students to create
-    unsigned int maxPurchases;             // maximum number of bottles a student purchases
-    unsigned int numVendingMachines;       // number of vending machines
-    unsigned int maxStockPerFlavour;       // maximum number of bottles of each flavour stocked
-    unsigned int maxShippedPerFlavour;     // number of bottles of each flavour in a shipment
-    unsigned int timeBetweenShipments;     // length of time between shipment pickup
-    unsigned int parentalDelay;            // length of time between cash deposits
-    unsigned int numCouriers;              // number of couriers in the pool
-};
-
-void processConfigFile( const char *configFile, ConfigParms &cparms );
 
 _Task Student {
     void main();

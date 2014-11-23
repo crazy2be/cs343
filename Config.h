@@ -1,6 +1,6 @@
 #pragma once
 
-struct ConfigParms {
+struct Config {
     int sodaCost;             // MSRP per bottle
     int numStudents;          // number of students to create
     int maxPurchases;         // maximum number of bottles a student purchases
@@ -12,4 +12,4 @@ struct ConfigParms {
     int numCouriers;          // number of couriers in the pool
 };
 
-void readConfigFile(const char *configFile, ConfigParms &cparms);
+void readConfigFile(const char *configFile, Config &cparms);

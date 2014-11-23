@@ -3,7 +3,7 @@
 #include <limits>
 #include <vector>
 using namespace std;
-#include "config.h"
+#include "Config.h"
 
 #define dassert(arg) assert(arg)
 
@@ -62,7 +62,7 @@ void parseFile(ifstream &in, vector<ConfigParam> &params) {
         }
     }
 }
-void readConfigFile(const char *configFile, ConfigParms &cparms) {
+void readConfigFile(const char *configFile, Config &cparms) {
     vector<ConfigParam> params = {
         {"SodaCost", false, cparms.sodaCost},
         {"NumStudents", false, cparms.numStudents},

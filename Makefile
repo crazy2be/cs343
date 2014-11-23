@@ -3,7 +3,7 @@ OPT:=-O2 -multi
 CXX = u++
 CXXFLAGS = -g -Wall -Wno-unused-label -MMD -std=c++11 ${OPT}
 
-OBJECTS = printer.o config.o
+OBJECTS = Printer.o Config.o
 DEPENDS = ${OBJECTS:.o=.d}
 
 .PHONY: all clean
