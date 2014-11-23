@@ -1,40 +1,39 @@
 #pragma once
 
-#include "q2tallyVotes.h"
-
 #include <vector>
 
-_Task Voter {
-    unsigned int id;
-    TallyVotes &voteTallier;
-    Printer &printer;
 
-    void main();
-  public:
-    enum States {Start = 'S', Vote = 'V', Block = 'B', Unblock = 'U',
-                 Barging = 'b', Complete = 'C', Finished = 'F'};
-    Voter(unsigned int id, TallyVotes &voteTallier, Printer &printer)
-        : id(id), voteTallier(voteTallier), printer(printer) {}
-};
+enum class PrinterKind {INVALID, Parent, WATCardOffice, NameServer, Truck,
+    BottlingPlant, Student, Vending, Courier};
 
 struct PrintState {
     bool changed;
-    Voter::States state;
-    bool vote;
-    unsigned numBlocked;
-    PrintState() : changed(false), state((Voter::States)'?'), vote(false), numBlocked(0) {}
+    PrinterKind kind;
+    char statec;
+    int value1;
+    int value2;
+    int numVals();
+    PrintState() : changed(false), kind(PrinterKind::INVALID), statec('?'),
+        value1(-1), value2(-1) {}
 };
 
 _Monitor Printer { // or _Cormonitor
     std::vector<PrintState> states;
+    int numStudents;
+    int numVendingMachines;
+    int numCouriers;
     void reset();
     void flush();
     void finishedFlush();
-    void checkFlush(unsigned id);
+    int statesIndex(PrinterKind kind, int id);
+    void printInternal(PrinterKind kind, int id, char statec, int value1, int value2);
   public:
-    Printer(int numVoters);
+    Printer(int numStudents, int numVendingMachines, int numCouriers);
     ~Printer();
-    void print(unsigned id, Voter::States state);
-    void print(unsigned id, Voter::States state, bool vote);
-    void print(unsigned id, Voter::States state, int numBlocked);
+    void print(PrinterKind kind, char state);
+    void print(PrinterKind kind, char state, int value1);
+    void print(PrinterKind kind, char state, int value1, int value2);
+    void print(PrinterKind kind, int id, char state);
+    void print(PrinterKind kind, int id, char state, int value1);
+    void print(PrinterKind kind, int id, char state, int value1, int value2);
 };

@@ -1,7 +1,7 @@
 OPT:=-O2 -multi
 
 CXX = u++
-CXXFLAGS = -g -Wall -Wno-unused-label -MMD ${OPT}
+CXXFLAGS = -g -Wall -Wno-unused-label -MMD -std=c++11 ${OPT}
 
 OBJECTS = printer.o config.o
 DEPENDS = ${OBJECTS:.o=.d}
