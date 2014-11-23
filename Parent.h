@@ -5,6 +5,13 @@
 
 _Task Parent {
     void main();
-  public:
-    Parent(Printer &prt, Bank &bank, int numStudents, int parentalDelay);
+    Printer &printer;
+    Bank &bank;
+    int numStudents;
+    int parentalDelay;
+    bool terminated;
+public:
+    Parent(Printer & printer, Bank & bank, int numStudents, int parentalDelay)
+        : printer(printer), bank(bank), numStudents(numStudents), parentalDelay(parentalDelay), terminated(false) {}
+    ~Parent();
 };

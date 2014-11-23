@@ -1,7 +1,7 @@
 #include "WATCardOffice.h"
 #include "MPRNG.h"
 
-MPRNG randGen;
+static MPRNG randGen;
 
 #define dassert(arg) assert(arg)
 
@@ -55,7 +55,7 @@ WATCard::FWATCard WATCardOffice::transfer(int sid, int amount, WATCard *card) {
 }
 WATCardOffice::Job *WATCardOffice::requestWork() {
     if (jobs.empty()) {
-        _Accept(create, transfer, terminated);
+        _Accept(create, transfer, terminate);
     }
     if (terminated) {
         dassert(jobs.empty());

@@ -32,7 +32,7 @@ _Task WATCardOffice {
     Bank &bank;
 
     bool terminated;
-    void terminate() { terminated = true; }
+    _Mutex void terminate() { terminated = true; }
 
     void main();
 public:
