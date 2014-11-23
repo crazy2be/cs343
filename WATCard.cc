@@ -1,6 +1,5 @@
 #include "WATCard.h"
-
-#define dassert(arg) assert(arg)
+#include "debug.h"
 
 WATCard::WATCard() : balance(0) {}
 void WATCard::deposit(int amount) {

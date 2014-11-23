@@ -1,6 +1,5 @@
 #include "Bank.h"
-
-#define dassert(arg) assert(arg)
+#include "debug.h"
 
 Bank::Bank(int numStudents) {
     balances.resize(numStudents);
