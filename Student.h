@@ -1,3 +1,5 @@
+#pragma once
+
 #include "Printer.h"
 #include "NameServer.h"
 #include "CardOffice.h"
