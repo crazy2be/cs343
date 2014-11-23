@@ -1,0 +1,32 @@
+Student
+	Random #, Random Flavor
+	WATCardOffice -> WATCard
+		May be lost, so call repeatedly
+	NameServer -> Vending Machine
+
+	*yield
+	if not enough money, ask for transfer
+		student *blocks until amount transfered appears on watcard
+	try buy	
+		drinks soda
+	OR
+		new vending machine
+
+
+WATCard
+	simple, almost POD
+
+WATCardOffice
+	
+
+Bank
+
+Parent
+
+VendingMachine
+
+NameServer
+
+BottlingPlant
+
+Truck
