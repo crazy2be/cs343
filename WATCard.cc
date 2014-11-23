@@ -1,10 +1,14 @@
 #include "WATCard.h"
 
-WATCard::WATCard() : balance(0) { }
+#define dassert(arg) assert(arg)
+
+WATCard::WATCard() : balance(0) {}
 void WATCard::deposit(int amount) {
+    dassert(amount > 0);
     balance += amount;
 }
 void WATCard::withdraw(int amount) {
+    dassert(amount > 0);
     balance -= amount;
 }
 int WATCard::getBalance() {
