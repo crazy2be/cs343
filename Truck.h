@@ -11,10 +11,12 @@ private:
     BottlingPlant& plant;
     int numVendingMachines;
     int maxStockPerFlavour;
-    
+
 public:
-    Truck(Printer & prt, NameServer & nameServer, BottlingPlant & plant,
-    int numVendingMachines, int maxStockPerFlavour);
+    Truck(Printer &printer, NameServer &nameServer, BottlingPlant &plant,
+             int numVendingMachines, int maxStockPerFlavour)
+    : printer(printer), nameServer(nameServer), plant(plant),
+      numVendingMachines(numVendingMachines), maxStockPerFlavour(maxStockPerFlavour) { }
 
 private:
     void main();

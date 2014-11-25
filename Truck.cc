@@ -7,13 +7,6 @@
 
 static MPRNG randGen;
 
-Truck::Truck(Printer &printer, NameServer &nameServer, BottlingPlant &plant,
-             int numVendingMachines, int maxStockPerFlavour)
-    : printer(printer), nameServer(nameServer), plant(plant),
-      numVendingMachines(numVendingMachines), maxStockPerFlavour(maxStockPerFlavour) {
-
-}
-
 void Truck::main() {
     VendingMachine **vendingMachines = nameServer.getMachineList();
 
@@ -23,7 +16,7 @@ void Truck::main() {
     int nextMachine = 0;
 
     while (true) {
-        yield(randGen(1, 10));
+        yield(randGen(1, 11));
         try {
             plant.getShipment(cargo.data());
         } catch (BottlingPlant::Shutdown) {
