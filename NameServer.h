@@ -1,6 +1,7 @@
 #pragma once
 
 #include <vector>
+#include "Printer.h"
 
 _Task VendingMachine;
 

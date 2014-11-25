@@ -4,6 +4,11 @@
 #include "NameServer.h"
 #include "WATCard.h"
 
+#include "debug.h"
+
+#include <vector>
+#include <uSemaphore.h>
+
 _Task VendingMachine {
 private:
     Printer &printer;
@@ -11,6 +16,11 @@ private:
     int id;
     int sodaCost;
     int maxStockPerFlavour;
+
+    //Index is Flavours, value is count
+    std::vector<int> sodas;
+    uSemaphore sodasLock;
+
 public:
     enum Flavours {
         Flavours_A,
@@ -24,13 +34,21 @@ public:
     VendingMachine(Printer & printer, NameServer & nameServer,
                    int id, int sodaCost, int maxStockPerFlavour)
         : printer(printer), nameServer(nameServer),
-          id(id), sodaCost(codaCost), maxStockPerFlavour(maxStockPerFlavour) {}
+          id(id), sodaCost(sodaCost), maxStockPerFlavour(maxStockPerFlavour) {
+        sodas.resize(Flavours_COUNT);
+    }
 
     void buy(Flavours flavour, WATCard & card);
-    int *inventory();
-    void restocked();
-    _Nomutex int cost();
-    _Nomutex int getId();
+    //Calling this requires restocked to be called sometime later,
+    //  so we can block access to inventory and be thread safe.
+    int *inventory(); //sodasLock.P()
+    void restocked(); //sodasLock.V()
+    _Nomutex int cost() {
+        return sodaCost;
+    }
+    _Nomutex int getId() {
+        return id;
+    }
 private:
-    void main();
+    void main() {}
 };

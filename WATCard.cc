@@ -7,8 +7,9 @@ void WATCard::deposit(int amount) {
     balance += amount;
 }
 void WATCard::withdraw(int amount) {
-    dassert(amount > 0);
+	dassert(amount > 0);
     balance -= amount;
+    dassert(balance > 0);
 }
 int WATCard::getBalance() {
     return balance;
