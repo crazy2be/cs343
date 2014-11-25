@@ -1,9 +1,9 @@
-#include <vector>
+#include "Truck.h"
+#include "VendingMachine.h"
 
 #include "MPRNG.h"
 
-#include "Truck.h"
-#include "VendingMachine.h"
+#include <vector>
 
 static MPRNG randGen;
 
@@ -36,6 +36,7 @@ void Truck::main() {
                     cargoZeros++;
                 }
             }
+            vendingMachines[nextMachine]->restocked();
             nextMachine = (nextMachine + 1) % numVendingMachines;
 
             //Stop if we have nothing left to add, leaving nextMachine for

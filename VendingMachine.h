@@ -5,8 +5,13 @@
 #include "WATCard.h"
 
 _Task VendingMachine {
-    void main();
-  public:
+private:
+    Printer &printer;
+    NameServer &nameServer;
+    int id;
+    int sodaCost;
+    int maxStockPerFlavour;
+public:
     enum Flavours {
         Flavours_A,
         Flavours_B,
@@ -16,11 +21,16 @@ _Task VendingMachine {
     };                 // flavours of soda (YOU DEFINE)
     _Event Funds {};                       // insufficient funds
     _Event Stock {};                       // out of stock for particular flavour
-    VendingMachine(Printer &prt, NameServer &nameServer, int id, int sodaCost,
-                   int maxStockPerFlavour);
-    void buy(Flavours flavour, WATCard &card);
+    VendingMachine(Printer & printer, NameServer & nameServer,
+                   int id, int sodaCost, int maxStockPerFlavour)
+        : printer(printer), nameServer(nameServer),
+          id(id), sodaCost(codaCost), maxStockPerFlavour(maxStockPerFlavour) {}
+
+    void buy(Flavours flavour, WATCard & card);
     int *inventory();
     void restocked();
-    _Nomutex unsigned int cost();
-    _Nomutex unsigned int getId();
+    _Nomutex int cost();
+    _Nomutex int getId();
+private:
+    void main();
 };
