@@ -6,7 +6,7 @@
 
 void NameServer::VMregister(VendingMachine * vendingMachine) {
 	//We expect them in order, probably is not really needed.
-	//dassert(vendingMachine->getId() == vendingMachines.size());
+	dassert(vendingMachine->getId() == vendingMachines.size());
 
 	vendingMachines.push_back(vendingMachine);
 }

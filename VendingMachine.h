@@ -36,6 +36,7 @@ public:
         : printer(printer), nameServer(nameServer),
           id(id), sodaCost(sodaCost), maxStockPerFlavour(maxStockPerFlavour) {
         sodas.resize(Flavours_COUNT);
+        nameServer.VMregister(this);
     }
 
     void buy(Flavours flavour, WATCard & card);
