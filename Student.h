@@ -2,7 +2,7 @@
 
 #include "Printer.h"
 #include "NameServer.h"
-#include "CardOffice.h"
+#include "WATCardOffice.h"
 
 _Task Student {
 private:
