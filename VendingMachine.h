@@ -29,7 +29,11 @@ public:
         Flavours_D,
         Flavours_COUNT
     };                 // flavours of soda (YOU DEFINE)
-    _Event Funds {};                       // insufficient funds
+    _Event Funds {
+    public:
+        int cost;
+        Funds(int cost) : cost(cost) { }
+    };                       // insufficient funds
     _Event Stock {};                       // out of stock for particular flavour
     VendingMachine(Printer & printer, NameServer & nameServer,
                    int id, int sodaCost, int maxStockPerFlavour)

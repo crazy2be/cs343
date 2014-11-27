@@ -13,7 +13,7 @@ void VendingMachine::buy(Flavours flavour, WATCard &card) {
 
     if (card.getBalance() < sodaCost) {
         sodasLock.V();
-        throw Funds();
+        throw Funds(sodaCost);
     }
 
     //The buy was successful
