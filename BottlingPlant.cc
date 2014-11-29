@@ -7,24 +7,31 @@
 static MPRNG randGen;
 
 void BottlingPlant::getShipment(int cargo[]) {
-    shipmentsReady.P();
+    printf("getShipment\n");
+    shipmentsReady.acquire();
+    printf("getShipment2\n");
     for (int ix = 0; ix < (int)shipment.size(); ix++) {
         cargo[ix] = shipment[ix];
     }
-    shipmentsPickedUp.V();
+    shipmentsPickedUp.release();
+    printf("Released shipmentsPickedUp %d\n", shipmentsPickedUp.counter());
 }
 
 void BottlingPlant::main() {
+    printf("BottlingPlant::main\n");
     Truck truck(printer, nameServer, *this, numVendingMachines, maxStockPerFlavour);
 
     shipment.resize(VendingMachine::Flavours_COUNT);
 
     while (true) {
         yield(timeBetweenShipments);
+        printf("BottlingPlant preparing shipments\n");
         for (int ix = 0; ix < (int)shipment.size(); ix++) {
             shipment[ix] = randGen(maxShippedPerFlavour + 1);
         }
-        shipmentsReady.V();
-        shipmentsPickedUp.P();
+        shipmentsReady.release();
+        printf("Released shipmentsRead\n");
+        shipmentsPickedUp.acquire();
+        printf("BottlingPlant woke up\n");
     }
 }

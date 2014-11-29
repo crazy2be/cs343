@@ -25,7 +25,9 @@ void Truck::main() {
 
         //At most go through all vendingMachines in one run
         for (int x = 0; x < numVendingMachines; x++) {
+            printf("Restocking %d\n", x);
             int *inventory = vendingMachines[nextMachine]->inventory();
+            printf("Got inventory %d\n", x);
             int cargoZeros = 0;
             for (int ix = 0; ix < (int)cargo.size(); ix++) {
                 int transfer = std::min(maxStockPerFlavour - inventory[ix], //Fill it up
@@ -36,7 +38,9 @@ void Truck::main() {
                     cargoZeros++;
                 }
             }
+            printf("About to restock %d\n", x);
             vendingMachines[nextMachine]->restocked();
+            printf("Restocked %d\n", x);
             nextMachine = (nextMachine + 1) % numVendingMachines;
 
             //Stop if we have nothing left to add, leaving nextMachine for
