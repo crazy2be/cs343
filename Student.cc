@@ -12,6 +12,7 @@ static MPRNG randGen;
 //  if it is lost once we will only add 5 dollars to it (cause the spec is strange)
 static void transferWithRetry(WATCardOffice &office, WATCard*&card, int sid, int dollars) {
     while (true) {
+        printf("transferWithRetry %d\n", sid);
         try {
             int preBalance = card->getBalance();
             //Wait for the transfer to complete, it won't change the card, so
@@ -34,6 +35,7 @@ void Student::main() {
 
     transferWithRetry(office, card, sid, 5);
     while (true) {
+        printf("main %d\n", sid);
         int quantity = randGen(1, maxPurchases + 1);
         VendingMachine::Flavours flavour = (VendingMachine::Flavours)randGen(VendingMachine::Flavours_COUNT);
 

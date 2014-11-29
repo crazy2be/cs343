@@ -7,9 +7,12 @@ static MPRNG randGen;
 void WATCardOffice::Courier::main() {
     while (true) {
         WATCardOffice::Job *job = office.requestWork();
+        printf("Got work %p\n", job);
         if (!job) break;
         bank.withdraw(job->sid, job->amount);
+        printf("Withdrew from bank\n");
         job->card->deposit(job->amount);
+        printf("Deposited\n");
 
         //1 in 6 chance to lose it
         if (randGen(6) == 0) {
