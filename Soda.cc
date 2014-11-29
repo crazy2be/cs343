@@ -8,6 +8,8 @@
 #include "BottlingPlant.h"
 #include "Student.h"
 
+#include <iostream>
+
 void uMain::main() {
     Config config;
     // TODO: soda.config should be argv[0]
@@ -44,6 +46,7 @@ void uMain::main() {
         }
 
 
+        std::cout << "Created all the shit!" << std::endl;
         // loop()
 
 

@@ -10,9 +10,12 @@ void Parent::main() {
             break;
         } _Else { }
 
+        printf("Parent: main\n");
         yield(delay);
         int gift = randGen(1, 4); //Random number from 1 to 3.
         int sid = randGen(numStudents);
+        printf("Parent: about to deposit %d to %d\n", gift, sid);
         bank.deposit(sid, gift);
+        printf("Parent: deposited %d in %d\n", gift, sid);
     }
 }
