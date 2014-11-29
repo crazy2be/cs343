@@ -1,30 +1,28 @@
 #pragma once
 
 #include <vector>
-#undef __U_SEMAPHORE_MONITOR__
-#include <uSemaphore.h>
+#include <queue>
 
 _Monitor Bank {
 private:
     class qqSemaphore {
         int bal;
+        std::queue<int> bals;
         uCondition *cond;
     public:
         qqSemaphore() : bal(0), cond(new uCondition) {}
         ~qqSemaphore() { delete cond; }
         void withdraw(int amount) {
-            bal -= amount;
-            if (bal < 0) {
+            if (bal - amount < 0) {
+                bals.push(amount);
                 cond->wait();
-                if (bal >= 0) {
-                    cond->signal();
-                }
             }
+            bal -= amount;
         }
         void deposit(int amount) {
             bal += amount;
-            if (bal >= 0) {
-                cond->signal();
+            while (!cond->empty() && bals.front() < bal) {
+                cond->signalBlock();
             }
         }
     };
