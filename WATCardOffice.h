@@ -37,7 +37,7 @@ _Task WATCardOffice {
     void main();
 public:
     _Event Lost {};                        // lost WATCard
-    WATCardOffice(Printer & prt, Bank & bank, int numCouriers );
+    WATCardOffice(Printer & prt, Bank & bank, int numCouriers);
     ~WATCardOffice();
     WATCard::FWATCard create(int sid, int amount);
     WATCard::FWATCard transfer(int sid, int amount, WATCard * card);
