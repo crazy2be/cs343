@@ -184,3 +184,5 @@ FakesAssemblies/
 *.d
 soda
 *.o
+
+*.DS_STORE

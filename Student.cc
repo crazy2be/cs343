@@ -51,5 +51,4 @@ void Student::main() {
             }
         }
     }
-
 }

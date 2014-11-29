@@ -2,9 +2,18 @@
 
 #include <vector>
 
-
-enum class PrinterKind {INVALID = 0, Parent, WATCardOffice, NameServer, Truck,
-    BottlingPlant, Student, Vending, Courier, NumKinds};
+enum class PrinterKind {
+    INVALID = 0, 
+    Parent, 
+    WATCardOffice, 
+    NameServer, 
+    Truck,
+    BottlingPlant, 
+    Student, 
+    Vending, 
+    Courier, 
+    NumKinds
+};
 
 struct PrintState {
     bool changed;
