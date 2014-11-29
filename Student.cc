@@ -34,23 +34,27 @@ void Student::main() {
     WATCard *card = new WATCard();
 
     transferWithRetry(office, card, sid, 5);
-    while (true) {
-        printf("main %d\n", sid);
-        int quantity = randGen(1, maxPurchases + 1);
-        VendingMachine::Flavours flavour = (VendingMachine::Flavours)randGen(VendingMachine::Flavours_COUNT);
 
-        while (quantity > 0) {
-            try {
-                machine->buy(flavour, *card);
-                //*drinks soda*
-                yield(randGen(1, 11));
-                quantity--;
-            } catch (VendingMachine::Stock) {
-                //Try another machine
-                machine = nameServer.getMachine(sid);
-            } catch (VendingMachine::Funds funds) {
-            	transferWithRetry(office, card, sid, funds.cost + 5);
-            }
+    printf("main %d\n", sid);
+    int quantity = (randGen() % (maxPurchases-1)) + 1;
+    VendingMachine::Flavours flavour = (VendingMachine::Flavours)randGen(VendingMachine::Flavours_COUNT);
+
+    while (quantity > 0) {
+//         printf("Quantity %d for student %d\n", quantity, sid);
+        try {
+            //printf("Trying to buy %d\n", sid);
+            machine->buy(flavour, *card);
+            printf("Bought %d\n", sid);
+            //*drinks soda*
+            yield(randGen(1, 11));
+            quantity--;
+        } catch (VendingMachine::Stock) {
+            //Try another machine
+            //printf("No stock for student %d\n", sid);
+            machine = nameServer.getMachine(sid);
+        } catch (VendingMachine::Funds funds) {
+            //printf("No funds for student %d\n", sid);
+            transferWithRetry(office, card, sid, funds.cost + 5);
         }
     }
 

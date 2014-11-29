@@ -37,7 +37,7 @@ public:
     _Event Stock {};                       // out of stock for particular flavour
     VendingMachine(Printer & printer, NameServer & nameServer,
                    int id, int sodaCost, int maxStockPerFlavour)
-        : printer(printer), nameServer(nameServer),
+        : printer(printer), nameServer(nameServer), sodasLock(1),
           id(id), sodaCost(sodaCost), maxStockPerFlavour(maxStockPerFlavour) {
         sodas.resize(Flavours_COUNT);
         nameServer.VMregister(this);

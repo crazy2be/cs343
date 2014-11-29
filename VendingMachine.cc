@@ -1,6 +1,7 @@
 #include "VendingMachine.h"
 
 void VendingMachine::buy(Flavours flavour, WATCard &card) {
+    //printf("VendingMachine::buy %d\n", id);
     sodasLock.acquire();
     int &stock = sodas[flavour];
     dassert(stock >= 0);
