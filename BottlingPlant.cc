@@ -7,11 +7,11 @@
 static MPRNG randGen;
 
 void BottlingPlant::getShipment(int cargo[]) {
-    shipmentsReady.P();
+    shipmentsReady.acquire();
     for (int ix = 0; ix < (int)shipment.size(); ix++) {
         cargo[ix] = shipment[ix];
     }
-    shipmentsPickedUp.V();
+    shipmentsPickedUp.release();
 }
 
 void BottlingPlant::main() {
@@ -24,7 +24,7 @@ void BottlingPlant::main() {
         for (int ix = 0; ix < (int)shipment.size(); ix++) {
             shipment[ix] = randGen(maxShippedPerFlavour + 1);
         }
-        shipmentsReady.V();
-        shipmentsPickedUp.P();
+        shipmentsReady.release();
+        shipmentsPickedUp.acquire();
     }
 }

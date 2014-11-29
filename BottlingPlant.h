@@ -1,9 +1,8 @@
 #pragma once
 
-#include <uSemaphore.h>
-
 #include "Printer.h"
 #include "NameServer.h"
+#include "qqSemaphore.h"
 
 #include <vector>
 
@@ -16,21 +15,20 @@ private:
     int maxStockPerFlavour;
     int timeBetweenShipments;
 
-    uSemaphore shipmentsReady;
-    uSemaphore shipmentsPickedUp;
+    qqSemaphore shipmentsReady;
+    qqSemaphore shipmentsPickedUp;
     std::vector<int> shipment;
 
 public:
     _Event Shutdown {};                    // shutdown plant
-    BottlingPlant(Printer & printer, NameServer & nameServer, int numVendingMachines,
-                  int maxShippedPerFlavour, int maxStockPerFlavour, int timeBetweenShipments)
-        : printer(printer), nameServer(nameServer), numVendingMachines(numVendingMachines),
-          maxShippedPerFlavour(maxShippedPerFlavour), maxStockPerFlavour(maxStockPerFlavour),
-          timeBetweenShipments(timeBetweenShipments) {
-        //Start at no shipmentsReady
-        shipmentsReady.P();
-        shipmentsPickedUp.P();
-    }
+    BottlingPlant(Printer & printer, NameServer & nameServer,
+                  int numVendingMachines, int maxShippedPerFlavour,
+                  int maxStockPerFlavour, int timeBetweenShipments)
+        : printer(printer), nameServer(nameServer),
+            numVendingMachines(numVendingMachines),
+            maxShippedPerFlavour(maxShippedPerFlavour),
+            maxStockPerFlavour(maxStockPerFlavour),
+            timeBetweenShipments(timeBetweenShipments) {}
 
     void getShipment(int cargo[]);
 private:

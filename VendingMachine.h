@@ -4,10 +4,10 @@
 #include "NameServer.h"
 #include "WATCard.h"
 
+#include "qqSemaphore.h"
 #include "debug.h"
 
 #include <vector>
-#include <uSemaphore.h>
 
 _Task VendingMachine {
 private:
@@ -19,7 +19,7 @@ private:
 
     //Index is Flavours, value is count
     std::vector<int> sodas;
-    uSemaphore sodasLock;
+    qqSemaphore sodasLock;
 
 public:
     enum Flavours {
