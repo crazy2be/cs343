@@ -4,27 +4,41 @@
 #include <iostream>
 using namespace std;
 
+
+#include "Printer.h"
+#include <vector>
+
 _Task BankWithdraw {
 public:
-	Bank& bank;
-	int id;
-	int count;
-	BankWithdraw(Bank& bank, int id, int count) : bank(bank), id(id), count(count) { }
-	void main() {
-		cout << "Waiting for withdrawl" << endl;
-		bank.withdraw(id, count);
-		cout << "withdrawn" << endl;
-	}
+    Bank &bank;
+    int id;
+    int count;
+    BankWithdraw(Bank & bank, int id, int count) : bank(bank), id(id), count(count) { }
+    void main() {
+        bank.withdraw(id, count);
+    }
 };
 
+static void TestBank() {
+    Bank bank(1);
+    {
+        BankWithdraw task(bank, 0, 2);
+        yield(10);
+        bank.deposit(0, 1);
+        bank.deposit(0, 1);
+    }
+}
+
+//static void ve
+
 void uMain::main() {
-	Bank bank(1);
-	{
-		BankWithdraw task(bank, 0, 2);
-		yield(10);
-		bank.deposit(0, 1);
-		bank.deposit(0, 1);
-	}
+    vector<PrinterKind> TestBankResult{
+        PrintState(PrinterKind::BankDeposit), 
+        PrintState(PrinterKind::BankDeposit),
+        PrintState(PrinterKind::BankWithdraw)
+    };
+    TestBank();
+}
 /*
 #include "Config.h"
 #include "Printer.h"
