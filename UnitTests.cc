@@ -9,26 +9,6 @@
 
 using namespace std;
 
-_Task BankWithdraw {
-public:
-    Bank &bank;
-    int id;
-    int count;
-    BankWithdraw(Bank & bank, int id, int count) : bank(bank), id(id), count(count) { }
-    void main() {
-        bank.withdraw(id, count);
-    }
-};
-
-static void TestBank(uBaseTask& task) {
-    Bank bank(1);
-    {
-        BankWithdraw task(bank, 0, 2);
-        task.yield(10);
-        bank.deposit(0, 1);
-        bank.deposit(0, 1);
-    }
-}
 
 static void VectorsEqual(vector<PrintState>& lhs, vector<PrintState>& rhs) {
     int ix = 0;
@@ -55,13 +35,37 @@ static void VectorsEqual(vector<PrintState>& lhs, vector<PrintState>& rhs) {
     }
 }
 
-void RunAllTests(uBaseTask& task) {
-	vector<PrintState> TestBankResults {
+
+_Task BankWithdraw {
+public:
+    Bank &bank;
+    int id;
+    int count;
+    BankWithdraw(Bank & bank, int id, int count) : bank(bank), id(id), count(count) { }
+    void main() {
+        bank.withdraw(id, count);
+    }
+};
+
+static void TestBank(uBaseTask& task) {
+    printer.states.clear();
+    Bank bank(1);
+    {
+        BankWithdraw task(bank, 0, 2);
+        task.yield(10);
+        bank.deposit(0, 1);
+        bank.deposit(0, 1);
+    }
+
+    vector<PrintState> TestBankResults {
         PrintState(PrinterKind::BankDeposit, 0, ' ', 1), 
         PrintState(PrinterKind::BankDeposit, 0, ' ', 1),
         PrintState(PrinterKind::BankWithdraw, 0, ' ', 2)
     };
-    TestBank(task);
     VectorsEqual(TestBankResults, printer.states);
+}
+
+void RunAllTests(uBaseTask& task) {
+    TestBank(task);
 }
 #endif
