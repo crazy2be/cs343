@@ -21,7 +21,7 @@ all: soda
 soda: ${OBJECTS} Soda.o
 	${CXX} ${CXXFLAGS} $^ -o $@\
 
-tests: ${OBJECTS} UnitTests.o
+tests: ${OBJECTS} TestsMain.o
 	${CXX} ${CXXFLAGS} $^ -o $@\
 
 ${OBJECTS}:

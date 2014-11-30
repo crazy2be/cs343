@@ -30,21 +30,9 @@ Printer::Printer(int numStudents, int numVendingMachines, int numCouriers)
 }
 
 const char *PrinterKind_Text[] = {
-    "INVALID",
-    "Parent",
-    "WATCardOffice",
-    "NameServer",
-    "Truck",
-    "BottlingPlant",
-    "Student",
-    "Vending",
-    "Courier",
-    "NumKinds",
-
-#ifdef TESTS
-    "BankDeposit",
-    "BankWithdraw",
-#endif
+#define TEXT(name) #name,
+    PRINTER_KIND(TEXT)
+#undef TEXT
 };
 
 void PrintState::print() {
@@ -60,27 +48,6 @@ void Printer::printInternal(PrinterKind kind, int id, char statec, int value1, i
     PrintState state(kind, id, statec, value1, value2);
     state.print();
     states.push_back(state);
-}
-void Printer::print(PrinterKind kind, char statec) {
-    printInternal(kind, 0, statec, -1, -1);
-}
-void Printer::print(PrinterKind kind, int id, char statec) {
-    printInternal(kind, id, statec, -1, -1);
-}
-void Printer::print(PrinterKind kind, char statec, int value1) {
-    printInternal(kind, 0, statec, value1, -1);
-}
-void Printer::print(PrinterKind kind, int id, char statec, int value1) {
-    printInternal(kind, id, statec, value1, -1);
-}
-void Printer::print(PrinterKind kind, char statec, int value1, int value2) {
-    printInternal(kind, 0, statec, value1, value2);
-}
-void Printer::print(PrinterKind kind, int id, char statec, int value1, int value2) {
-    printInternal(kind, id, statec, value1, value2);
-}
-void Printer::print(PrinterKind kind, int id, int value1, int value2) {
-    printInternal(kind, id, ' ', value1, value2);
 }
 
 #else
@@ -154,7 +121,11 @@ void Printer::finishedFlush() {
 }
 void Printer::printInternal(PrinterKind kind, int id, char statec,
                             int value1, int value2) {
-    //TEST print statement
+    if (kind > PrinterKind::NumKinds || statec == ' ') {
+        // This is a special "test" print statement just used for unit tests.
+        // Since we are not running in unit test mode now, we just ignore it.
+        return;
+    }
     dassert(kind < PrinterKind::NumKinds);
     dassert(kind > PrinterKind::INVALID);
 
@@ -166,25 +137,14 @@ void Printer::printInternal(PrinterKind kind, int id, char statec,
     state.changed = true;
     if (statec == 'F') finishedFlush();
 }
-void Printer::print(PrinterKind kind, char statec) {
-    printInternal(kind, 0, statec, -1, -1);
-}
-void Printer::print(PrinterKind kind, int id, char statec) {
-    printInternal(kind, id, statec, -1, -1);
-}
-void Printer::print(PrinterKind kind, char statec, int value1) {
-    printInternal(kind, 0, statec, value1, -1);
-}
-void Printer::print(PrinterKind kind, int id, char statec, int value1) {
-    printInternal(kind, id, statec, value1, -1);
-}
+#endif
+
 void Printer::print(PrinterKind kind, char statec, int value1, int value2) {
     printInternal(kind, 0, statec, value1, value2);
 }
 void Printer::print(PrinterKind kind, int id, char statec, int value1, int value2) {
     printInternal(kind, id, statec, value1, value2);
 }
-void Printer::print(PrinterKind kind, int id, int value1, int value) {
-    //Nothing, just for TESTS
+void Printer::print(PrinterKind kind, int id, int value1, int value2) {
+    printInternal(kind, id, ' ', value1, value2);
 }
-#endif
