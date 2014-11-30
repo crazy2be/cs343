@@ -87,6 +87,7 @@ void Printer::print(PrinterKind kind, int id, int value1, int value2) {
 #else
 Printer::~Printer() {
     cout << "***********************" << endl;
+    printf("Printer destructor\n");
 }
 void Printer::reset() {
     for (int i = 0; i < (int)states.size(); i++) {

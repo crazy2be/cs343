@@ -10,6 +10,7 @@ private:
     std::vector<qqSemaphore> accounts;
 public:
     Bank(int numStudents);
+    ~Bank() { printf("Bank destructor\n"); }
     void deposit(int id, int amount);
     //Blocks until enough money is deposited to cover the withdrawal
     void withdraw(int id, int amount);

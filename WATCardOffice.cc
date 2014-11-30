@@ -39,11 +39,11 @@ WATCardOffice::WATCardOffice(Printer &printer, Bank &bank, int numCouriers)
     }
 }
 WATCardOffice::~WATCardOffice() {
-    printf("office start dtor\n");
+    printf("Destructing WATCardOffice\n");
     for (int ix = 0; ix < (int)couriers.size(); ix++) {
         delete couriers[ix];
     }
-    printf("office end dtor\n");
+    printf("Destructed WATCardOffice\n");
 }
 WATCard::FWATCard WATCardOffice::create(int sid, int amount) {
     WATCard *card = new WATCard();
