@@ -49,11 +49,13 @@ _Monitor Printer { // or _Cormonitor
 public:
     #endif
     std::vector<PrintState> states;
+    int numOfEachKind[(int)PrinterKind::NumKinds];
+    bool tests;
+
     void reset();
     void flush();
     void finishedFlush();
 
-    int numOfEachKind[(int)PrinterKind::NumKinds];
     int statesIndex(PrinterKind kind, int id);
     PrinterKind kind(int statesIndex);
 
