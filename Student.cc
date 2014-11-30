@@ -26,6 +26,7 @@ void Student::transferWithRetry(WATCard *&card, int dollars) {
 
 VendingMachine *Student::nextMachine() {
     VendingMachine *machine = nameServer.getMachine(sid);
+    dassert(machine);
     printer.print(PrinterKind::Student, sid, 'V', machine->getId());
     return machine;
 }

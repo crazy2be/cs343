@@ -20,11 +20,13 @@ static int mod(int num, int base) {
 }
 
 VendingMachine* NameServer::getMachine(int sid) {
+    dassert(numVendingMachines == (int)vendingMachines.size());
     int vid = studentMachines[sid];
 
-    studentMachines[sid] = mod(studentMachines[sid] + 1, numVendingMachines);
+    studentMachines[sid] = mod(vid + 1, numVendingMachines);
     printer.print(PrinterKind::NameServer, 'N', sid, vid);
 
+    dassert(vid >= 0 && vid < (int)vendingMachines.size());
     return vendingMachines[vid];
 }
 

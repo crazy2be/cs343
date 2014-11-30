@@ -118,8 +118,8 @@ Config oneConfig() {
 
 void uMain::main() {
 //     Config config = genRandConfig();
-    Config config = oneConfig();
-//     Config config = genRandConfig();
+//     Config config = oneConfig();
+    Config config = genRandConfig();
 
     printf(
         "Running test with:\n"

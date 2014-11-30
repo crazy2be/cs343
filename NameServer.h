@@ -18,7 +18,7 @@ public:
     NameServer(Printer & printer, int numVendingMachines, int numStudents)
         : printer(printer), numVendingMachines(numVendingMachines), numStudents(numStudents) {
             for (int ix = 0; ix < numStudents; ix++) {
-                studentMachines.push_back(ix);
+                studentMachines.push_back(ix % numVendingMachines);
             }
             printer.print(PrinterKind::NameServer, 'S');
         }
