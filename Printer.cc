@@ -7,11 +7,10 @@ using namespace std;
 //Just for tests
 Printer printer;
 
-Printer::Printer() { }
+Printer::Printer() : tests(true) { }
 Printer::Printer(int numStudents, int numVendingMachines, int numCouriers)
     : numOfEachKind {0, 1, 1, 1, 1, 1, numStudents, numVendingMachines,
-    numCouriers
-} {
+    numCouriers}, tests(false) {
 #ifndef TESTS
     cout << "Parent\t" << "WATOff\t" << "Names\t" << "Truck\t" << "Plant\t";
     for (int i = 0; i < numStudents; i++) cout << "Stud" << i << "\t";
@@ -86,6 +85,7 @@ void Printer::print(PrinterKind kind, int id, int value1, int value2) {
 
 #else
 Printer::~Printer() {
+    if(tests) return;
     cout << "***********************" << endl;
     printf("Printer destructor\n");
 }
