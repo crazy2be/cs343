@@ -52,4 +52,5 @@ void Truck::main() {
             if (sum(cargo) == 0) break;
         }
     }
+    printer.print(PrinterKind::Truck, 'F');
 }
