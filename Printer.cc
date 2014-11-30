@@ -130,7 +130,7 @@ int PrintState::numVals(PrinterKind kind) {
         dassert(statec == 'S');
         switch (kind) {
         case PrinterKind::Student: return 2;
-        case PrinterKind::Vending: return 1;
+        case PrinterKind::VendingMachine: return 1;
         default: return 0;
         }
     }

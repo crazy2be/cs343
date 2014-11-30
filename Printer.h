@@ -11,7 +11,7 @@ enum class PrinterKind {
     Truck,
     BottlingPlant, 
     Student, 
-    Vending, 
+    VendingMachine,
     Courier, 
     NumKinds
 

@@ -22,16 +22,11 @@ void WATCardOffice::Courier::main() {
         delete job;
     }
 }
-WATCardOffice::Courier::Courier(WATCardOffice &office, Bank &bank)
-    : office(office), bank(bank) {}
-
-
-void WATCardOffice::main() {}
 
 WATCardOffice::WATCardOffice(Printer &printer, Bank &bank, int numCouriers)
-    : printer(printer), bank(bank) {
+        : printer(printer), bank(bank) {
     for (int ix = 0; ix < numCouriers; ix++) {
-        couriers.push_back(new Courier(*this, bank));
+        couriers.push_back(new Courier(printer, *this, bank));
     }
     printer.print(PrinterKind::WATCardOffice, 'S');
 }

@@ -19,15 +19,18 @@ void VendingMachine::buy(Flavours flavour, WATCard &card) {
     //The buy was successful
     card.withdraw(sodaCost);
     stock--;
+    printer.print(PrinterKind::VendingMachine, id, 'B', flavour, stock);
     sodasLock.release();
 }
 
 int *VendingMachine::inventory() {
     sodasLock.acquire();
+    printer.print(PrinterKind::VendingMachine, id, 'r');
     return sodas.data();
 }
 
 void VendingMachine::restocked() {
     dassert(sodasLock.counter() == 0);
     sodasLock.release();
+    printer.print(PrinterKind::VendingMachine, id, 'R');
 }

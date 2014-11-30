@@ -20,10 +20,12 @@ _Task WATCardOffice {
     _Task Courier {
     private:
         void main();
+        Printer &printer;
         WATCardOffice &office;
         Bank &bank;
     public:
-        Courier(WATCardOffice &, Bank &);
+        Courier(Printer &printer, WATCardOffice &office, Bank &bank)
+            : printer(printer), office(office), bank(bank) {}
     };
 
     std::vector<Courier*> couriers;
@@ -31,10 +33,10 @@ _Task WATCardOffice {
     Printer &printer;
     Bank &bank;
 
-    void main();
+    void main() {}
 public:
     _Event Lost {};                        // lost WATCard
-    WATCardOffice(Printer & prt, Bank & bank, int numCouriers);
+    WATCardOffice(Printer &printer, Bank &bank, int numCouriers);
     virtual ~WATCardOffice();
     WATCard::FWATCard create(int sid, int amount);
     WATCard::FWATCard transfer(int sid, int amount, WATCard * card);

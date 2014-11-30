@@ -37,11 +37,14 @@ public:
     _Event Stock {};                       // out of stock for particular flavour
     VendingMachine(Printer & printer, NameServer & nameServer,
                    int id, int sodaCost, int maxStockPerFlavour)
-        : printer(printer), nameServer(nameServer), id(id),
-        sodaCost(sodaCost), maxStockPerFlavour(maxStockPerFlavour), sodasLock(1) {
+            : printer(printer), nameServer(nameServer), id(id),
+            sodaCost(sodaCost), maxStockPerFlavour(maxStockPerFlavour),
+            sodasLock(1) {
+        printer.print(PrinterKind::VendingMachine, id, 'S', sodaCost);
         sodas.resize(Flavours_COUNT);
         nameServer.VMregister(this);
     }
+    ~VendingMachine() { printer.print(PrinterKind::VendingMachine, id, 'F'); }
 
     void buy(Flavours flavour, WATCard & card);
     //Calling this requires restocked to be called sometime later,
