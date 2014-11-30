@@ -21,4 +21,5 @@ public:
 private:
     void main();
     VendingMachine *nextMachine();
+    void transferWithRetry(WATCard *&card, int dollars);
 };
