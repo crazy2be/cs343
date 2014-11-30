@@ -117,9 +117,32 @@ Config oneConfig() {
 }
 
 void uMain::main() {
+//     Config config = genRandConfig();
     Config config = oneConfig();
 //     Config config = genRandConfig();
-    
+
+    printf(
+        "Running test with:\n"
+        "sodaCost %d, "
+        "numStudents %d, "
+        "maxPurchases %d, "
+        "numVendingMachines %d, "
+        "maxStockPerFlavour %d, "
+        "maxShippedPerFlavour %d, "
+        "timeBetweenShipments %d, "
+        "parentalDelay %d, "
+        "numCouriers %d\n",
+        config.sodaCost,
+        config.numStudents,
+        config.maxPurchases,
+        config.numVendingMachines,
+        config.maxStockPerFlavour,
+        config.maxShippedPerFlavour,
+        config.timeBetweenShipments,
+        config.parentalDelay,
+        config.numCouriers
+    );
+
     Main(config);
     //RunAllTests(*this);
 }
