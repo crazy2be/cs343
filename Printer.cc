@@ -4,8 +4,8 @@
 #include <iostream>
 using namespace std;
 
-//Just for tests
-Printer printer;
+// Just for tests
+Printer testPrinter;
 
 Printer::Printer() : tests(true) { }
 Printer::Printer(int numStudents, int numVendingMachines, int numCouriers)
@@ -161,6 +161,7 @@ void Printer::printInternal(PrinterKind kind, int id, char statec,
                             int value1, int value2) {
     //TEST print statement
     dassert(kind < PrinterKind::NumKinds);
+    dassert(kind > PrinterKind::INVALID);
 
     PrintState &state = states.at(statesIndex(kind, id));
     if (state.changed) flush();

@@ -75,4 +75,4 @@ public:
     void print(PrinterKind kind, int id=0, int value1=-1, int value=-1);
 };
 
-extern Printer printer;
+extern Printer testPrinter;
