@@ -24,6 +24,7 @@ Printer::Printer(int numStudents, int numVendingMachines, int numCouriers)
 }
 Printer::~Printer() {
     cout << "***********************" << endl;
+    printf("Printer destructor\n");
 }
 void Printer::reset() {
     for (int i = 0; i < (int)states.size(); i++) {

@@ -26,19 +26,18 @@ _Task WATCardOffice {
         Courier(WATCardOffice &, Bank &);
     };
 
-    std::vector<Courier *> couriers;
+    std::vector<Courier*> couriers;
     std::queue<Job*> jobs;
     Printer &printer;
     Bank &bank;
 
     bool terminated;
-    _Mutex void terminate() { terminated = true; }
 
     void main();
 public:
     _Event Lost {};                        // lost WATCard
     WATCardOffice(Printer & prt, Bank & bank, int numCouriers);
-    ~WATCardOffice();
+    virtual ~WATCardOffice();
     WATCard::FWATCard create(int sid, int amount);
     WATCard::FWATCard transfer(int sid, int amount, WATCard * card);
     Job * requestWork();

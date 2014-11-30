@@ -38,10 +38,12 @@ WATCardOffice::WATCardOffice(Printer &printer, Bank &bank, int numCouriers)
     }
 }
 WATCardOffice::~WATCardOffice() {
-    terminate();
+    printf("Destructing WATCardOffice\n");
+    terminated = true;
     for (int ix = 0; ix < (int)couriers.size(); ix++) {
         delete couriers[ix];
     }
+    printf("Destructed WATCardOffice\n");
 }
 WATCard::FWATCard WATCardOffice::create(int sid, int amount) {
     WATCard *card = new WATCard();
@@ -57,7 +59,7 @@ WATCard::FWATCard WATCardOffice::transfer(int sid, int amount, WATCard *card) {
 }
 WATCardOffice::Job *WATCardOffice::requestWork() {
     if (jobs.empty()) {
-        _Accept(create, transfer, terminate);
+        _Accept(create, transfer, ~WATCardOffice);
     }
     if (terminated) {
         dassert(jobs.empty());
