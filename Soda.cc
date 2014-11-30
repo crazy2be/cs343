@@ -1,6 +1,8 @@
 #include "Config.h"
 #include "Main.h"
 
+#include <iostream>
+
 void argErr(char *argv0) {
     std::cerr << "Usage: " << argv0 << " [ config-file [ random-seed (> 0) ] ]"
         << std::endl;
