@@ -4,11 +4,30 @@
 #include <iostream>
 using namespace std;
 
-#ifdef TESTS
+//Just for tests
 Printer printer;
-#endif
 
-#ifdef TESTS
+Printer::Printer() { }
+Printer::Printer(int numStudents, int numVendingMachines, int numCouriers)
+        : numOfEachKind {0, 1, 1, 1, 1, 1, numStudents, numVendingMachines,
+        numCouriers
+    } {
+        cout << "Parent\t" << "WATOff\t" << "Names\t" << "Truck\t" << "Plant\t";
+        for (int i = 0; i < numStudents; i++) cout << "Stud" << i << "\t";
+        for (int i = 0; i < numVendingMachines; i++) cout << "Mach" << i << "\t";
+        for (int i = 0; i < numCouriers; i++) cout << "Cour" << i << "\t";
+        cout << endl;
+
+        int n = 5 + numStudents + numVendingMachines + numCouriers;
+        for (int i = 0; i < n; i++) {
+            cout << "*******" << "\t";
+        }
+        cout << endl;
+
+        states.resize(n);
+        reset();
+    }
+
 const char * PrinterKind_Text[] = {
     "INVALID", 
     "Parent", 
@@ -26,13 +45,17 @@ const char * PrinterKind_Text[] = {
     , "BankWithdraw"
     #endif
 };
-    void PrintState::print() {
-        printf("%s %d %c %d %d\n", PrinterKind_Text[(int)kind], id, statec, value1, value2);
-    }
 
-    Printer::Printer() { }
+void PrintState::print() {
+    printf("%s %d %c %d %d\n", PrinterKind_Text[(int)kind], id, statec, value1, value2);
+}
+
+#ifdef TESTS
     Printer::~Printer() { }
     void Printer::printInternal(PrinterKind kind, int id, char statec, int value1, int value2) {
+        if(*this != printer) {
+            return printInternal(kind, id, statec, value1, value2);
+        }
         PrintState state(kind, id, statec, value1, value2);
         state.print();
         states.push_back(state);
@@ -60,25 +83,6 @@ const char * PrinterKind_Text[] = {
     }
 
 #else
-    Printer::Printer(int numStudents, int numVendingMachines, int numCouriers)
-        : numOfEachKind {0, 1, 1, 1, 1, 1, numStudents, numVendingMachines,
-        numCouriers
-    } {
-        cout << "Parent\t" << "WATOff\t" << "Names\t" << "Truck\t" << "Plant\t";
-        for (int i = 0; i < numStudents; i++) cout << "Stud" << i << "\t";
-        for (int i = 0; i < numVendingMachines; i++) cout << "Mach" << i << "\t";
-        for (int i = 0; i < numCouriers; i++) cout << "Cour" << i << "\t";
-        cout << endl;
-
-        int n = 5 + numStudents + numVendingMachines + numCouriers;
-        for (int i = 0; i < n; i++) {
-            cout << "*******" << "\t";
-        }
-        cout << endl;
-
-        states.resize(n);
-        reset();
-    }
     Printer::~Printer() {
         cout << "***********************" << endl;
     }
@@ -147,6 +151,9 @@ const char * PrinterKind_Text[] = {
     }
     void Printer::printInternal(PrinterKind kind, int id, char statec,
                                 int value1, int value2) {
+        //TEST print statement
+        if(kind > PrinterKind::NumKinds) return;
+
         PrintState &state = states.at(statesIndex(kind, id));
         if (state.changed) flush();
         state.statec = statec;
@@ -172,5 +179,8 @@ const char * PrinterKind_Text[] = {
     }
     void Printer::print(PrinterKind kind, int id, char statec, int value1, int value2) {
         printInternal(kind, id, statec, value1, value2);
+    }
+    void Printer::print(PrinterKind kind, int id, int value1, int value) {
+        //Nothing, just for TESTS
     }
 #endif

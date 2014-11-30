@@ -2,8 +2,6 @@
 
 #include <vector>
 
-#define TESTS
-
 
 enum class PrinterKind {
     INVALID = 0, 
@@ -17,10 +15,11 @@ enum class PrinterKind {
     Courier, 
     NumKinds
 
-    #ifdef TESTS
+    //TESTS print statements, ignored by the regular printed, but
+    //  used by the TESTS printer.    
     , BankDeposit
     , BankWithdraw
-    #endif
+    
 };
 
 struct PrintState {
@@ -34,16 +33,15 @@ struct PrintState {
     PrintState() : changed(false), statec('?'), value1(-1), value2(-1) {}
     PrintState(PrinterKind kind, int id=0, char statec=' ', int value1=-1, int value2=-1) 
         : kind(kind), id(id), statec(statec), value1(value1), value2(value2) { }
-#ifdef TESTS
-        void print();
-        bool equals(PrintState& other) {
-            return kind==other.kind
-            && id==other.id
-            && statec==other.statec 
-            && value1 == other.value1 
-            && value2 == other.value2;
-        }
-#endif
+        
+    void print();
+    bool equals(PrintState& other) {
+        return kind==other.kind
+        && id==other.id
+        && statec==other.statec 
+        && value1 == other.value1 
+        && value2 == other.value2;
+    }
 };
 
 _Monitor Printer { // or _Cormonitor
@@ -61,11 +59,10 @@ public:
 
     void printInternal(PrinterKind kind, int id, char statec, int value1, int value2);
   public:
-    #ifdef TESTS
-        Printer();
-    #else
-        Printer(int numStudents, int numVendingMachines, int numCouriers);
-    #endif
+
+    Printer();
+    Printer(int numStudents, int numVendingMachines, int numCouriers);
+
     ~Printer();
     void print(PrinterKind kind, char state);
     void print(PrinterKind kind, char state, int value1);
@@ -73,11 +70,7 @@ public:
     void print(PrinterKind kind, int id, char state);
     void print(PrinterKind kind, int id, char state, int value1);
     void print(PrinterKind kind, int id, char state, int value1, int value2);
-    #ifdef TESTS
     void print(PrinterKind kind, int id=0, int value1=-1, int value=-1);
-    #endif
 };
 
-#ifdef TESTS
 extern Printer printer;
-#endif
