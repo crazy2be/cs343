@@ -9,6 +9,9 @@
 #include "Printer.h"
 #include "debug.h"
 
+#include "Config.h"
+#include "Main.h"
+
 using namespace std;
 
 
@@ -70,6 +73,12 @@ static void TestBank(uBaseTask& task) {
 void RunAllTests(uBaseTask& task) {
     TestBank(task);
 }
+
 void uMain::main() {
-    RunAllTests(*this);
+    Config config;
+    // TODO: soda.config should be argv[0]
+    readConfigFile("soda.config", config);
+
+    Main(config);
+    //RunAllTests(*this);
 }

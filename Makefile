@@ -3,7 +3,7 @@ OPT:=-O2 -multi
 CXX = u++
 BASEFLAGS = -g -Wall -Wno-unused-label -MMD -std=c++11 ${OPT}
 
-OBJECTS = Printer.o Config.o Bank.o BottlingPlant.o WATCard.o WATCardOffice.o VendingMachine.o Truck.o Student.o Parent.o NameServer.o
+OBJECTS = Printer.o Config.o Bank.o BottlingPlant.o WATCard.o WATCardOffice.o VendingMachine.o Truck.o Student.o Parent.o NameServer.o Main.o
 DEPENDS = ${OBJECTS:.o=.d}
 
 ifeq (${MAKECMDGOALS},tests)
