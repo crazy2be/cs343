@@ -26,11 +26,16 @@ const char * PrinterKind_Text[] = {
     , "BankWithdraw"
     #endif
 };
+    void PrintState::print() {
+        printf("%s %d %c %d %d\n", PrinterKind_Text[(int)kind], id, statec, value1, value2);
+    }
+
     Printer::Printer() { }
     Printer::~Printer() { }
     void Printer::printInternal(PrinterKind kind, int id, char statec, int value1, int value2) {
-        printf("%s %d %c %d %d\n", PrinterKind_Text[(int)kind], id, statec, value1, value2);
-        states.push_back(PrintState(kind, id, statec, value1, value2));
+        PrintState state(kind, id, statec, value1, value2);
+        state.print();
+        states.push_back(state);
     }
     void Printer::print(PrinterKind kind, char statec) {
         printInternal(kind, 0, statec, -1, -1);
@@ -50,8 +55,8 @@ const char * PrinterKind_Text[] = {
     void Printer::print(PrinterKind kind, int id, char statec, int value1, int value2) {
         printInternal(kind, id, statec, value1, value2);
     }
-    void Printer::print(PrinterKind kind, int value1, int value2) {
-        printInternal(kind, 0, ' ', value1, value2);
+    void Printer::print(PrinterKind kind, int id, int value1, int value2) {
+        printInternal(kind, id, ' ', value1, value2);
     }
 
 #else

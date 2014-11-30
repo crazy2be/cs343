@@ -22,6 +22,8 @@ static void transferWithRetry(WATCardOffice &office, WATCard*&card, int sid, int
             break;
         } catch (WATCardOffice::Lost) {
             dollars = 5;
+            //Call create, but with zero dollars, and make create see this is special
+            //  and just return right away.
             card = new WATCard();
         }
     }
