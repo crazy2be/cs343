@@ -24,6 +24,7 @@ void WATCardOffice::Courier::main() {
         }
         delete job;
     }
+    printf("courier done\n");
 }
 WATCardOffice::Courier::Courier(WATCardOffice &office, Bank &bank)
     : office(office), bank(bank) {}
@@ -32,16 +33,17 @@ WATCardOffice::Courier::Courier(WATCardOffice &office, Bank &bank)
 void WATCardOffice::main() { }
 
 WATCardOffice::WATCardOffice(Printer &printer, Bank &bank, int numCouriers)
-    : printer(printer), bank(bank), terminated(false) {
+    : printer(printer), bank(bank) {
     for (int ix = 0; ix < numCouriers; ix++) {
         couriers.push_back(new Courier(*this, bank));
     }
 }
 WATCardOffice::~WATCardOffice() {
-    terminate();
+    printf("office start dtor\n");
     for (int ix = 0; ix < (int)couriers.size(); ix++) {
         delete couriers[ix];
     }
+    printf("office end dtor\n");
 }
 WATCard::FWATCard WATCardOffice::create(int sid, int amount) {
     WATCard *card = new WATCard();
@@ -57,11 +59,12 @@ WATCard::FWATCard WATCardOffice::transfer(int sid, int amount, WATCard *card) {
 }
 WATCardOffice::Job *WATCardOffice::requestWork() {
     if (jobs.empty()) {
-        _Accept(create, transfer, terminate);
-    }
-    if (terminated) {
-        dassert(jobs.empty());
-        return NULL;
+        _Accept(create, transfer) {
+
+        } or _Accept(~WATCardOffice) {
+            dassert(jobs.empty());
+            return NULL;
+        }
     }
     dassert(!jobs.empty());
 

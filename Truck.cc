@@ -49,4 +49,5 @@ void Truck::main() {
             if (cargoZeros == (int)cargo.size()) break;
         }
     }
+    printf("Truck exiting\n");
 }

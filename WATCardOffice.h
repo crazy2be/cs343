@@ -31,9 +31,6 @@ _Task WATCardOffice {
     Printer &printer;
     Bank &bank;
 
-    bool terminated;
-    _Mutex void terminate() { terminated = true; }
-
     void main();
 public:
     _Event Lost {};                        // lost WATCard
