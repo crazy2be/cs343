@@ -1,10 +1,6 @@
 #include "BottlingPlant.h"
 #include "Truck.h"
-
-#include "MPRNG.h"
 #include "VendingMachine.h"
-
-static MPRNG randGen;
 
 static int sum(std::vector<int> &a) {int s = 0; for(int e:a)s += e; return s;}
 void BottlingPlant::getShipment(int cargo[]) {
@@ -27,7 +23,7 @@ void BottlingPlant::main() {
     while (true) {
         yield(timeBetweenShipments);
         for (int ix = 0; ix < (int)shipment.size(); ix++) {
-            shipment[ix] = randGen(maxShippedPerFlavour + 1);
+            shipment[ix] = rand() % (maxShippedPerFlavour + 1);
         }
         printer.print(PrinterKind::BottlingPlant, 'G', sum(shipment));
         _Accept(~BottlingPlant) {
