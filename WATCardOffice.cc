@@ -5,11 +5,14 @@
 static MPRNG randGen;
 
 void WATCardOffice::Courier::main() {
+    printer.print(PrinterKind::Courier, 'S');
     while (true) {
         WATCardOffice::Job *job = office.requestWork();
         if (!job) break;
+        printer.print(PrinterKind::Courier, 't', job->sid, job->amount);
         bank.withdraw(job->sid, job->amount);
         job->card->deposit(job->amount);
+        printer.print(PrinterKind::Courier, 'T', job->sid, job->amount);
 
         //1 in 6 chance to lose it
         if (randGen(6) == 0) {
@@ -21,6 +24,7 @@ void WATCardOffice::Courier::main() {
         }
         delete job;
     }
+    printer.print(PrinterKind::Courier, 'F');
 }
 
 WATCardOffice::WATCardOffice(Printer &printer, Bank &bank, int numCouriers)
