@@ -1,11 +1,7 @@
 #include "Truck.h"
 #include "VendingMachine.h"
 
-#include "MPRNG.h"
-
 #include <vector>
-
-static MPRNG randGen;
 
 static int sum(const std::vector<int> &a) {
     int s = 0; for (int i = 0; i < (int)a.size(); i++) s += a[i]; return s;
@@ -20,7 +16,7 @@ void Truck::main() {
     int nextMachine = 0;
 
     while (true) {
-        yield(randGen(1, 11));
+        yield((rand() % 11) + 1);
         try {
             plant.getShipment(cargo.data());
             printer.print(PrinterKind::Truck, 'P', sum(cargo));

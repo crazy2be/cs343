@@ -1,9 +1,5 @@
 #include "Parent.h"
 
-#include "MPRNG.h"
-
-static MPRNG randGen;
-
 void Parent::main() {
     printer.print(PrinterKind::Parent, 'S');
     while (true) {
@@ -11,8 +7,8 @@ void Parent::main() {
             break;
         } _Else {
             yield(delay);
-            int sid = randGen(numStudents);
-            int gift = randGen(1, 4); // Random number from 1 to 3.
+            int sid = rand() % numStudents;
+            int gift = (rand() % 3) + 1; // Random number from 1 to 3.
             printer.print(PrinterKind::Parent, 'D', sid, gift);
             bank.deposit(sid, gift);
         }

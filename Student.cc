@@ -1,12 +1,7 @@
 #include "Student.h"
-
 #include "VendingMachine.h"
 #include "WATCard.h"
-
-#include "MPRNG.h"
 #include "debug.h"
-
-static MPRNG randGen;
 
 // If the card is lost, we will retry until it is created, but if it is lost
 // once we will only add 5 dollars to it (cause the spec is strange)
@@ -36,9 +31,9 @@ VendingMachine *Student::nextMachine() {
 }
 
 void Student::main() {
-    int quantity = (randGen() % (maxPurchases-1)) + 1;
+    int quantity = (rand() % (maxPurchases-1)) + 1;
     VendingMachine::Flavours favourite =
-        (VendingMachine::Flavours)randGen(VendingMachine::Flavours_COUNT);
+        (VendingMachine::Flavours)(rand() % VendingMachine::Flavours_COUNT);
     printer.print(PrinterKind::Student, sid, 'S', favourite, quantity);
 
     VendingMachine *machine = nextMachine();
@@ -54,7 +49,7 @@ void Student::main() {
             machine->buy(favourite, *card);
             printer.print(PrinterKind::Student, sid, 'B', card->getBalance());
             // *drinks soda*
-            yield(randGen(1, 11));
+            yield((rand() % 11) + 1);
             quantity--;
         } catch (VendingMachine::Stock) {
             // Try another machine
