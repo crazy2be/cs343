@@ -6,15 +6,19 @@
 
 static MPRNG randGen;
 
+BottlingPlant::~BottlingPlant() {
+    printf("Destruction BottlingPlant\n");
+}
+
 void BottlingPlant::getShipment(int cargo[]) {
     printf("getShipment\n");
-    shipmentsReady.acquire();
-    printf("getShipment2\n");
+    if (shuttingDown) {
+        uRendezvousAcceptor();
+        throw Shutdown();
+    }
     for (int ix = 0; ix < (int)shipment.size(); ix++) {
         cargo[ix] = shipment[ix];
     }
-    shipmentsPickedUp.release();
-    printf("Released shipmentsPickedUp %d\n", shipmentsPickedUp.counter());
 }
 
 void BottlingPlant::main() {
@@ -29,9 +33,14 @@ void BottlingPlant::main() {
         for (int ix = 0; ix < (int)shipment.size(); ix++) {
             shipment[ix] = randGen(maxShippedPerFlavour + 1);
         }
-        shipmentsReady.release();
-        printf("Released shipmentsRead\n");
-        shipmentsPickedUp.acquire();
-        printf("BottlingPlant woke up\n");
+        _Accept(~BottlingPlant) {
+            printf("BottlingPlant woke up\n");
+            shuttingDown = true;
+            _Accept(getShipment);
+            break;
+        } or _Accept(getShipment) {
+            printf("Released shipmentsRead\n");
+        }
     }
+    printf("BottelingPlant exiting\n");
 }

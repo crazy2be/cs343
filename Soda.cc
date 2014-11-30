@@ -75,9 +75,12 @@ void uMain::main() {
         for (int i = 0; i < (int)students.size(); i++) {
             delete students[i];
         }
+        printf("Deleted students\n");
     }
 
+    printf("deleted bottlingPlant\n");
     for (int i = 0; i < (int)machines.size(); i++) {
         delete machines[i];
     }
+    printf("Deleted machines\n");
 }
