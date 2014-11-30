@@ -14,9 +14,8 @@ private:
     int maxShippedPerFlavour;
     int maxStockPerFlavour;
     int timeBetweenShipments;
+    bool shuttingDown;
 
-    qqSemaphore shipmentsReady;
-    qqSemaphore shipmentsPickedUp;
     std::vector<int> shipment;
 
 public:
@@ -28,9 +27,11 @@ public:
             numVendingMachines(numVendingMachines),
             maxShippedPerFlavour(maxShippedPerFlavour),
             maxStockPerFlavour(maxStockPerFlavour),
-            timeBetweenShipments(timeBetweenShipments) {}
+            timeBetweenShipments(timeBetweenShipments),
+            shuttingDown(false) {}
+    virtual ~BottlingPlant();
 
     void getShipment(int cargo[]);
 private:
-    void main();
+    _Mutex void main();
 };

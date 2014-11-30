@@ -1,8 +1,7 @@
 #pragma once
 
 #include <uFuture.h>
-
-#define dassert(arg) assert(arg)
+#include "debug.h"
 
 //Not thread safe, should only be access by one thread anyway though
 class WATCard {

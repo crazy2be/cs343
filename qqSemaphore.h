@@ -1,6 +1,7 @@
 #pragma once
 
 #include <queue>
+#include "debug.h"
 
 // Semaphphore-like class for use inside an monitor.
 class qqSemaphore {
@@ -20,6 +21,7 @@ public:
             cond->wait();
         }
         bal -= amount;
+        dassert(bal >= 0);
     }
 
     void release() { deposit(1); }

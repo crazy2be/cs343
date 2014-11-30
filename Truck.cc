@@ -18,6 +18,7 @@ void Truck::main() {
     while (true) {
         yield(randGen(1, 11));
         try {
+            printf("trying to getShipment\n");
             plant.getShipment(cargo.data());
         } catch (BottlingPlant::Shutdown) {
             break;
