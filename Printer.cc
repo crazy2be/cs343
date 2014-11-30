@@ -107,10 +107,10 @@ int Printer::statesIndex(PrinterKind kind, int id) {
 PrinterKind Printer::kind(int statesIndex) {
     int off = 0;
     for (int k = 0; k < (int)PrinterKind::NumKinds; k++) {
-        if (off + numOfEachKind[k] > statesIndex) {
+        off += numOfEachKind[k];
+        if (off > statesIndex) {
             return (PrinterKind)k;
         }
-        off += numOfEachKind[k];
     }
     dassert(false); // i out of range...
 }
@@ -118,9 +118,9 @@ int PrintState::numVals(PrinterKind kind) {
     const static string NO_VALUE = "FWPLrR";
     const static string ONE_VALUE = "RPGVBS";
     const static string TWO_VALUE = "DCTNdUDSBt";
-    if (NO_VALUE.find(statec) >= 0) return 0;
-    else if (ONE_VALUE.find(statec) >= 0) return 1;
-    else if (TWO_VALUE.find(statec) >= 0) return 2;
+    if (NO_VALUE.find(statec) != string::npos) return 0;
+    else if (ONE_VALUE.find(statec) != string::npos) return 1;
+    else if (TWO_VALUE.find(statec) != string::npos) return 2;
     else {
         dassert(statec == 'S');
         switch (kind) {
@@ -155,7 +155,7 @@ void Printer::finishedFlush() {
 void Printer::printInternal(PrinterKind kind, int id, char statec,
                             int value1, int value2) {
     //TEST print statement
-    if (kind > PrinterKind::NumKinds) return;
+    dassert(kind < PrinterKind::NumKinds);
 
     PrintState &state = states.at(statesIndex(kind, id));
     if (state.changed) flush();
