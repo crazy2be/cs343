@@ -7,7 +7,11 @@
 
 static MPRNG randGen;
 
+static int sum(const std::vector<int> &a) {
+    int s = 0; for (int i = 0; i < (int)a.size(); i++) s += a[i]; return s;
+}
 void Truck::main() {
+    printer.print(PrinterKind::Truck, 'S');
     VendingMachine **vendingMachines = nameServer.getMachineList();
 
     std::vector<int> cargo;
@@ -19,29 +23,33 @@ void Truck::main() {
         yield(randGen(1, 11));
         try {
             plant.getShipment(cargo.data());
+            printer.print(PrinterKind::Truck, 'P', sum(cargo));
         } catch (BottlingPlant::Shutdown) {
             break;
         }
 
         //At most go through all vendingMachines in one run
         for (int x = 0; x < numVendingMachines; x++) {
+            printer.print(PrinterKind::Truck, 'd', nextMachine, sum(cargo));
             int *inventory = vendingMachines[nextMachine]->inventory();
-            int cargoZeros = 0;
+            int notReplenished = 0;
             for (int ix = 0; ix < (int)cargo.size(); ix++) {
-                int transfer = std::min(maxStockPerFlavour - inventory[ix], //Fill it up
-                                   cargo[ix]); //Or at least add as many as we can
+                int optimal = maxStockPerFlavour - inventory[ix];
+                int transfer = std::min(optimal, cargo[ix]);
+                notReplenished += optimal - transfer;
                 inventory[ix] += transfer;
                 cargo[ix] -= transfer;
-                if (cargo[ix] == 0) {
-                    cargoZeros++;
-                }
+            }
+            if (notReplenished) {
+                printer.print(PrinterKind::Truck, 'U', nextMachine, notReplenished);
             }
             vendingMachines[nextMachine]->restocked();
+            printer.print(PrinterKind::Truck, 'D', nextMachine, sum(cargo));
             nextMachine = (nextMachine + 1) % numVendingMachines;
 
             //Stop if we have nothing left to add, leaving nextMachine for
             //  the next run (so distribution is fair).
-            if (cargoZeros == (int)cargo.size()) break;
+            if (sum(cargo) == 0) break;
         }
     }
 }
