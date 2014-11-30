@@ -4,6 +4,8 @@
 #include "NameServer.h"
 #include "WATCardOffice.h"
 
+class VendingMachine;
+
 _Task Student {
 private:
     Printer &printer;
@@ -18,4 +20,5 @@ public:
             maxPurchases(maxPurchases) { }
 private:
     void main();
+    VendingMachine *nextMachine();
 };

@@ -20,6 +20,7 @@ static void transferWithRetry(WATCardOffice &office, WATCard*&card, int sid, int
             dassert(card->getBalance() == preBalance + dollars);
             break;
         } catch (WATCardOffice::Lost) {
+            printer.print(PrinterKind::Student, sid, 'L');
             dollars = 5;
             //Call create, but with zero dollars, and make create see this is special
             //  and just return right away.
@@ -28,30 +29,41 @@ static void transferWithRetry(WATCardOffice &office, WATCard*&card, int sid, int
     }
 }
 
-void Student::main() {
+VendingMachine *Student::nextMachine() {
     VendingMachine *machine = nameServer.getMachine(sid);
+    printer.print(PrinterKind::Student, sid, 'V', machine->getId());
+    return machine;
+}
+
+void Student::main() {
+    int quantity = (randGen() % (maxPurchases-1)) + 1;
+    VendingMachine::Flavours favourite =
+        (VendingMachine::Flavours)randGen(VendingMachine::Flavours_COUNT);
+    printer.print(PrinterKind::Student, sid, 'S', favourite, quantity);
+
+    VendingMachine *machine = nextMachine();
 
     //FREE THIS!
     WATCard *card = new WATCard();
 
     transferWithRetry(office, card, sid, 5);
 
-    int quantity = (randGen() % (maxPurchases-1)) + 1;
-    VendingMachine::Flavours flavour = (VendingMachine::Flavours)randGen(VendingMachine::Flavours_COUNT);
 
     while (quantity > 0) {
         try {
-            machine->buy(flavour, *card);
+            machine->buy(favourite, *card);
+            printer.print(PrinterKind::Student, 'B', card->getBalance());
             // *drinks soda*
             yield(randGen(1, 11));
             quantity--;
         } catch (VendingMachine::Stock) {
             // Try another machine
-            machine = nameServer.getMachine(sid);
+            machine = nextMachine();
         } catch (VendingMachine::Funds funds) {
             transferWithRetry(office, card, sid, funds.cost + 5);
         }
     }
 
     delete card;
+    printer.print(PrinterKind::Student, sid, 'F');
 }

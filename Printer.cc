@@ -40,11 +40,11 @@ const char *PrinterKind_Text[] = {
     "Student",
     "Vending",
     "Courier",
-    "NumKinds"
+    "NumKinds",
 
 #ifdef TESTS
-    , "BankDeposit"
-    , "BankWithdraw"
+    "BankDeposit",
+    "BankWithdraw",
 #endif
 };
 
@@ -100,7 +100,12 @@ int Printer::statesIndex(PrinterKind kind, int id) {
     for (int k = 0; k < (int)kind; k++) {
         off += numOfEachKind[k];
     }
+    for (int i = 0; i < (int)PrinterKind::NumKinds; i++) {
+        printf("%d ", numOfEachKind[(int)i]);
+    }
+    printf("\n");
     dassert(id >= 0);
+    printf("%d %d %d\n", id, kind, numOfEachKind[(int)kind]);
     dassert(id < numOfEachKind[(int)kind]);
     return off + id;
 }
