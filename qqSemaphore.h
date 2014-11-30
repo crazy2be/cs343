@@ -15,7 +15,7 @@ public:
     void acquire() { withdraw(1); }
     void withdraw(int amount) {
         if (bal - amount < 0) {
-            printf("Blockde on qqSemaphore\n");
+            printf("Blocked on qqSemaphore\n");
             bals.push(amount);
             cond->wait();
         }

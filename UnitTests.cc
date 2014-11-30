@@ -1,3 +1,5 @@
+#ifdef TESTS
+
 #include "UnitTests.h"
 
 #include "Bank.h"
@@ -28,7 +30,7 @@ static void TestBank(uBaseTask& task) {
     }
 }
 
-static void VectorsEqual(vector<PrintState> lhs, vector<PrintState> rhs) {
+static void VectorsEqual(vector<PrintState>& lhs, vector<PrintState>& rhs) {
     int ix = 0;
     while(ix < (int)min(lhs.size(), rhs.size())) {
         if(!lhs[ix].equals(rhs[ix])) {
@@ -62,3 +64,4 @@ void RunAllTests(uBaseTask& task) {
     TestBank(task);
     VectorsEqual(TestBankResults, printer.states);
 }
+#endif

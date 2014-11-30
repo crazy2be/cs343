@@ -1,4 +1,6 @@
-//#include "UnitTests.h"
+#ifdef TESTS
+    #include "UnitTests.h"
+#endif
 
 
 #include "Bank.h"
@@ -11,7 +13,11 @@ using namespace std;
 
 #ifdef TESTS
 void uMain::main() {
-    RunAllTests(*this);
+    try {
+        RunAllTests(*this);
+    } catch(bad_alloc& alloc) {
+        printf("%s\n", alloc.what());
+    }
 }
 #else
 
