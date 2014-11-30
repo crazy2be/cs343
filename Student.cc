@@ -59,4 +59,6 @@ void Student::main() {
             transferWithRetry(office, card, sid, funds.cost + 5);
         }
     }
+
+    delete card;
 }
