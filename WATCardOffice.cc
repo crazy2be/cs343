@@ -55,8 +55,11 @@ WATCardOffice::Job *WATCardOffice::requestWork() {
     if (jobs.empty()) {
         _Accept(~WATCardOffice) {
             dassert(jobs.empty());
-            printer.print(PrinterKind::WATCardOffice, 'W');
-            return NULL;
+            jobs.push(NULL);
+            for (int i = 0; i < (int)couriers.size() - 1; i++) {
+                _Accept(requestWork);
+                jobs.push(NULL);
+            }
         } or _Accept(create, transfer) {}
     }
     dassert(!jobs.empty());
