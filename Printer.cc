@@ -116,8 +116,8 @@ PrinterKind Printer::kind(int statesIndex) {
 }
 int PrintState::numVals(PrinterKind kind) {
     const static string NO_VALUE = "FWPLrR";
-    const static string ONE_VALUE = "RPGVBS";
-    const static string TWO_VALUE = "DCTNdUDSBt";
+    const static string ONE_VALUE = "RPGVB";
+    const static string TWO_VALUE = "DCTNdUDBt";
     if (NO_VALUE.find(statec) != string::npos) return 0;
     else if (ONE_VALUE.find(statec) != string::npos) return 1;
     else if (TWO_VALUE.find(statec) != string::npos) return 2;
