@@ -10,6 +10,7 @@ void NameServer::VMregister(VendingMachine * vendingMachine) {
     // vending machine twice (well, unless we have vending machines with
     // duplicate IDs, but then we are really fucked).
     dassert(vendingMachine->getId() == (int)vendingMachines.size());
+    printer.print(PrinterKind::NameServer, 'R', vendingMachine->getId());
 
     vendingMachines.push_back(vendingMachine);
 }
@@ -22,6 +23,7 @@ VendingMachine* NameServer::getMachine(int sid) {
     int vid = studentMachines[sid];
 
     studentMachines[sid] = mod(studentMachines[sid] + 1, numVendingMachines);
+    printer.print(PrinterKind::NameServer, 'N', sid, vid);
 
     return vendingMachines[vid];
 }

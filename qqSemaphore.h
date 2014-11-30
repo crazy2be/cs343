@@ -6,7 +6,6 @@
 // Semaphphore-like class for use inside an monitor.
 class qqSemaphore {
     int bal;
-    std::queue<int> bals;
     uCondition *cond;
 public:
     qqSemaphore() : bal(0), cond(new uCondition) {}
@@ -16,8 +15,7 @@ public:
     void acquire() { withdraw(1); }
     void withdraw(int amount) {
         if (bal - amount < 0) {
-            bals.push(amount);
-            cond->wait();
+            cond->wait(amount);
         }
         bal -= amount;
         dassert(bal >= 0);
@@ -26,7 +24,7 @@ public:
     void release() { deposit(1); }
     void deposit(int amount) {
         bal += amount;
-        while (!cond->empty() && bals.front() <= bal) {
+        while (!cond->empty() && cond->front() <= bal) {
             cond->signalBlock();
         }
     }

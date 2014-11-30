@@ -20,7 +20,9 @@ public:
             for (int ix = 0; ix < numStudents; ix++) {
                 studentMachines.push_back(ix);
             }
+            printer.print(PrinterKind::NameServer, 'S');
         }
+    ~NameServer() { printer.print(PrinterKind::NameServer, 'F'); }
     void VMregister(VendingMachine * vendingMachine);
     VendingMachine * getMachine(int sid);
     VendingMachine **getMachineList();
