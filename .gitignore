@@ -186,3 +186,4 @@ soda
 *.o
 
 *.DS_STORE
+tests

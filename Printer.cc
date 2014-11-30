@@ -54,7 +54,7 @@ void PrintState::print() {
 #ifdef TESTS
 Printer::~Printer() { }
 void Printer::printInternal(PrinterKind kind, int id, char statec, int value1, int value2) {
-    if (this != &printer) {
+    if (this != &testPrinter) {
         return printInternal(kind, id, statec, value1, value2);
     }
     PrintState state(kind, id, statec, value1, value2);

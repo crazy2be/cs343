@@ -1,4 +1,6 @@
-#ifdef TESTS
+#ifndef TESTS
+#error "You shouldn't compile UnitTests.cc without test mode on."
+#endif
 
 #include "UnitTests.h"
 
@@ -48,7 +50,7 @@ public:
 };
 
 static void TestBank(uBaseTask& task) {
-    printer.states.clear();
+    testPrinter.states.clear();
     Bank bank(1);
     {
         BankWithdraw task(bank, 0, 2);
@@ -62,10 +64,12 @@ static void TestBank(uBaseTask& task) {
         PrintState(PrinterKind::BankDeposit, 0, ' ', 1),
         PrintState(PrinterKind::BankWithdraw, 0, ' ', 2)
     };
-    VectorsEqual(TestBankResults, printer.states);
+    VectorsEqual(TestBankResults, testPrinter.states);
 }
 
 void RunAllTests(uBaseTask& task) {
     TestBank(task);
 }
-#endif
+void uMain::main() {
+    RunAllTests(*this);
+}

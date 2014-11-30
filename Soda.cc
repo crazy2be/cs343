@@ -1,27 +1,3 @@
-#ifdef TESTS
-    #include "UnitTests.h"
-#endif
-
-
-#include "Bank.h"
-#include "Parent.h"
-
-#include <iostream>
-#include <vector>
-
-using namespace std;
-
-#ifdef TESTS
-void uMain::main() {
-    try {
-        RunAllTests(*this);
-    } catch(bad_alloc& alloc) {
-        printf("%s\n", alloc.what());
-    }
-}
-#else
-
-
 #include "Config.h"
 #include "Printer.h"
 #include "Bank.h"
@@ -34,29 +10,7 @@ void uMain::main() {
 
 #include <iostream>
 
-#include <stdio.h>
-#include <execinfo.h>
-#include <signal.h>
-#include <stdlib.h>
-#include <unistd.h>
-
-// This isn'nt neende we should delete it.
-void handler(int sig) {
-    void *array[100];
-    size_t size;
-
-    // get void*'s for all entries on the stack
-    size = backtrace(array, 100);
-
-    // print out all the frames to stderr
-    fprintf(stderr, "Error: signal %d:\n", sig);
-    backtrace_symbols_fd(array, size, STDERR_FILENO);
-    exit(1);
-}
-
 void uMain::main() {
-    signal(SIGSEGV, handler);   // install our handler
-
     Config config;
     // TODO: soda.config should be argv[0]
     readConfigFile("soda.config", config);
@@ -91,21 +45,16 @@ void uMain::main() {
             students.push_back(student);
         }
 
-
-        std::cout << "Created all the shit!" << std::endl;
-        // loop()
-
+        // loop () {
+        //      We idle here waiting for all the students to finish.
+        // }
 
         for (int i = 0; i < (int)students.size(); i++) {
             delete students[i];
         }
-        printf("Deleted students\n");
     }
 
-    printf("deleted bottlingPlant\n");
     for (int i = 0; i < (int)machines.size(); i++) {
         delete machines[i];
     }
-    printf("Deleted machines\n");
 }
-#endif
