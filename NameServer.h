@@ -21,7 +21,6 @@ public:
                 studentMachines.push_back(ix);
             }
         }
-    virtual ~NameServer() { printf("Destructing nameserver\n"); }
     void VMregister(VendingMachine * vendingMachine);
     VendingMachine * getMachine(int sid);
     VendingMachine **getMachineList();

@@ -29,7 +29,6 @@ public:
             maxStockPerFlavour(maxStockPerFlavour),
             timeBetweenShipments(timeBetweenShipments),
             shuttingDown(false) {}
-    virtual ~BottlingPlant();
 
     void getShipment(int cargo[]);
 private:

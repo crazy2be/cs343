@@ -14,14 +14,14 @@ void NameServer::VMregister(VendingMachine * vendingMachine) {
     vendingMachines.push_back(vendingMachine);
 }
 
-int MOD(int num, int base) {
+static int mod(int num, int base) {
     return ((num % base) + base) % base;
 }
 
 VendingMachine* NameServer::getMachine(int sid) {
     int vid = studentMachines[sid];
 
-    studentMachines[sid] = MOD(studentMachines[sid] + 1, numVendingMachines);
+    studentMachines[sid] = mod(studentMachines[sid] + 1, numVendingMachines);
 
     return vendingMachines[vid];
 }

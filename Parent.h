@@ -12,5 +12,4 @@ _Task Parent {
 public:
     Parent(Printer & printer, Bank & bank, int numStudents, int delay)
         : printer(printer), bank(bank), numStudents(numStudents), delay(delay) {}
-    ~Parent() { printf("Parent destructor\n"); }
 };

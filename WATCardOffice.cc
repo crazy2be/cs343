@@ -7,12 +7,9 @@ static MPRNG randGen;
 void WATCardOffice::Courier::main() {
     while (true) {
         WATCardOffice::Job *job = office.requestWork();
-        printf("Got work %p\n", job);
         if (!job) break;
         bank.withdraw(job->sid, job->amount);
-        printf("Withdrew from bank\n");
         job->card->deposit(job->amount);
-        printf("Deposited\n");
 
         //1 in 6 chance to lose it
         if (randGen(6) == 0) {
@@ -24,7 +21,6 @@ void WATCardOffice::Courier::main() {
         }
         delete job;
     }
-    printf("courier done\n");
 }
 WATCardOffice::Courier::Courier(WATCardOffice &office, Bank &bank)
     : office(office), bank(bank) {}
@@ -39,11 +35,9 @@ WATCardOffice::WATCardOffice(Printer &printer, Bank &bank, int numCouriers)
     }
 }
 WATCardOffice::~WATCardOffice() {
-    printf("Destructing WATCardOffice\n");
     for (int ix = 0; ix < (int)couriers.size(); ix++) {
         delete couriers[ix];
     }
-    printf("Destructed WATCardOffice\n");
 }
 WATCard::FWATCard WATCardOffice::create(int sid, int amount) {
     WATCard *card = new WATCard();
