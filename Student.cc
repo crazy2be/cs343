@@ -31,7 +31,7 @@ VendingMachine *Student::nextMachine() {
 }
 
 void Student::main() {
-    int quantity = (rand() % (maxPurchases-1)) + 1;
+    int quantity = (rand() % maxPurchases) + 1;
     VendingMachine::Flavours favourite =
         (VendingMachine::Flavours)(rand() % VendingMachine::Flavours_COUNT);
     printer.print(PrinterKind::Student, sid, 'S', favourite, quantity);

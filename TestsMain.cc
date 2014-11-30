@@ -88,8 +88,37 @@ Config genRandConfig() {
     return config;
 }
 
+Config defaultConfig() {
+    Config c = {};
+    c.sodaCost = 2;
+    c.numStudents = 2;
+    c.maxPurchases = 8;
+    c.numVendingMachines = 3;
+    c.maxStockPerFlavour = 5;
+    c.maxShippedPerFlavour = 3;
+    c.timeBetweenShipments = 3;
+    c.parentalDelay = 2;
+    c.numCouriers = 1;
+    return c;
+}
+
+Config oneConfig() {
+    Config c = {};
+    c.sodaCost = 1;
+    c.numStudents = 1;
+    c.maxPurchases = 1;
+    c.numVendingMachines = 1;
+    c.maxStockPerFlavour = 1;
+    c.maxShippedPerFlavour = 1;
+    c.timeBetweenShipments = 1;
+    c.parentalDelay = 1;
+    c.numCouriers = 1;
+    return c;
+}
+
 void uMain::main() {
-    Config config = genRandConfig();
+    Config config = oneConfig();
+//     Config config = genRandConfig();
     
     Main(config);
     //RunAllTests(*this);
