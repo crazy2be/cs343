@@ -49,8 +49,6 @@ void Student::main() {
         try {
             machine->buy(favourite, *card);
             printer.print(PrinterKind::Student, sid, 'B', card->getBalance());
-            // *drinks soda*
-            yield((rand() % 11) + 1);
             quantity--;
         } catch (VendingMachine::Stock) {
             // Try another machine
@@ -58,6 +56,8 @@ void Student::main() {
         } catch (VendingMachine::Funds funds) {
             transferWithRetry(card, funds.cost + 5);
         }
+        // *drinks soda, or maybe just sadness*
+        yield((rand() % 11) + 1);
     }
 
     delete card;
