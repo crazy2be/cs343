@@ -33,9 +33,7 @@ _Task WATCardOffice {
     qqSemaphore couriersDone;
 public:
     void courierDone(){
-        printf("before %d couriers done\n", couriersDone.counter());
         couriersDone.release();
-        printf("after %d couriers done\n", couriersDone.counter());
     }
 
 private:

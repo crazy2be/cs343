@@ -33,15 +33,12 @@ WATCardOffice::WATCardOffice(Printer &printer, Bank &bank, int numCouriers)
     printer.print(PrinterKind::WATCardOffice, 'S');
 }
 WATCardOffice::~WATCardOffice() {
-    printf("Being dtor\n");
     for (int ix = 0; ix < (int)couriers.size(); ix++) {
         jobs.push(NULL);
         jobsReady.release();
     }
 
-    printf("Waiting for couriers to finish\n");
     couriersDone.withdraw((int)couriers.size());
-    printf("Couriers finished\n");
 
     for (int ix = 0; ix < (int)couriers.size(); ix++) {
         delete couriers[ix];
