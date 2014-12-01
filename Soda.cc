@@ -53,8 +53,8 @@ void testdocs() {
 }
 
 void uMain::main() {
-    //testdocs();
-    //return;
+    testdocs();
+    return;
 
     std::string configName = "soda.config";
     int seed = getpid();

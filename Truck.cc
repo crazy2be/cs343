@@ -3,9 +3,7 @@
 
 #include <vector>
 
-static int sum(const std::vector<int> &a) {
-    int s = 0; for (int i = 0; i < (int)a.size(); i++) s += a[i]; return s;
-}
+static int sum(std::vector<int> &a) {int s = 0; for(int e : a) s+=e; return s;}
 void Truck::main() {
     printer.print(PrinterKind::Truck, 'S');
     VendingMachine **vendingMachines = nameServer.getMachineList();
