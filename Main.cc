@@ -12,6 +12,32 @@
 
 #include <iostream>
 
+void runTest(Config c) {
+    printf(
+        "Running test with:\n"
+        "c.sodaCost = %d;\n"
+        "c.numStudents = %d;\n"
+        "c.maxPurchases = %d;\n"
+        "c.numVendingMachines = %d;\n"
+        "c.maxStockPerFlavour = %d;\n"
+        "c.maxShippedPerFlavour = %d;\n"
+        "c.timeBetweenShipments = %d;\n"
+        "c.parentalDelay = %d;\n"
+        "c.numCouriers = %d;\n\n",
+        c.sodaCost,
+        c.numStudents,
+        c.maxPurchases,
+        c.numVendingMachines,
+        c.maxStockPerFlavour,
+        c.maxShippedPerFlavour,
+        c.timeBetweenShipments,
+        c.parentalDelay,
+        c.numCouriers
+    );
+
+    Main(c);
+}
+
 void Main(Config& config) {
     Printer printer(config.numStudents, config.numVendingMachines,
                     config.numCouriers);
