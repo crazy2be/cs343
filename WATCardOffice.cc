@@ -22,6 +22,7 @@ void WATCardOffice::Courier::main() {
         delete job;
     }
     printer.print(PrinterKind::Courier, 'F');
+    office.courierDone();
 }
 
 WATCardOffice::WATCardOffice(Printer &printer, Bank &bank, int numCouriers)
@@ -32,6 +33,16 @@ WATCardOffice::WATCardOffice(Printer &printer, Bank &bank, int numCouriers)
     printer.print(PrinterKind::WATCardOffice, 'S');
 }
 WATCardOffice::~WATCardOffice() {
+    printf("Being dtor\n");
+    for (int ix = 0; ix < (int)couriers.size(); ix++) {
+        jobs.push(NULL);
+        jobsReady.release();
+    }
+
+    printf("Waiting for couriers to finish\n");
+    couriersDone.withdraw((int)couriers.size());
+    printf("Couriers finished\n");
+
     for (int ix = 0; ix < (int)couriers.size(); ix++) {
         delete couriers[ix];
     }
@@ -47,21 +58,16 @@ WATCard::FWATCard WATCardOffice::create(int sid, int amount) {
 WATCard::FWATCard WATCardOffice::transfer(int sid, int amount, WATCard *card) {
     WATCardOffice::Job *job = new WATCardOffice::Job(card, sid, amount);
 
+    WATCard::FWATCard fcard = job->result;
     jobs.push(job);
+    jobsReady.release();
+
     printer.print(PrinterKind::WATCardOffice, 'T', sid, amount);
-    return job->result;
+    
+    return fcard;
 }
 WATCardOffice::Job *WATCardOffice::requestWork() {
-    if (jobs.empty()) {
-        _Accept(~WATCardOffice) {
-            dassert(jobs.empty());
-            jobs.push(NULL);
-            for (int i = 0; i < (int)couriers.size() - 1; i++) {
-                _Accept(requestWork);
-                jobs.push(NULL);
-            }
-        } or _Accept(create, transfer) {}
-    }
+    jobsReady.acquire();
     dassert(!jobs.empty());
 
     WATCardOffice::Job *job = jobs.front();

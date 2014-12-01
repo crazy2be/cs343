@@ -4,6 +4,8 @@
 #include "Bank.h"
 #include "Printer.h"
 
+#include "qqSemaphore.h"
+
 #include <vector>
 #include <queue>
 
@@ -28,8 +30,19 @@ _Task WATCardOffice {
             : printer(printer), office(office), bank(bank) {}
     };
 
+    qqSemaphore couriersDone;
+public:
+    void courierDone(){
+        printf("before %d couriers done\n", couriersDone.counter());
+        couriersDone.release();
+        printf("after %d couriers done\n", couriersDone.counter());
+    }
+
+private:
     std::vector<Courier*> couriers;
     std::queue<Job*> jobs;
+    qqSemaphore jobsReady;
+
     Printer &printer;
     Bank &bank;
 

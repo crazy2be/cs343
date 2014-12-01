@@ -16,8 +16,9 @@ public:
     void withdraw(int amount) {
         if (bal - amount < 0) {
             cond->wait(amount);
+        } else {
+           bal -= amount;
         }
-        bal -= amount;
         dassert(bal >= 0);
     }
 
@@ -25,7 +26,8 @@ public:
     void deposit(int amount) {
         bal += amount;
         while (!cond->empty() && cond->front() <= bal) {
-            cond->signalBlock();
+            bal -= amount;
+            cond->signal();
         }
     }
 
