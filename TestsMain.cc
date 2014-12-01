@@ -116,33 +116,58 @@ Config oneConfig() {
     return c;
 }
 
+Config badConfig1() {
+    Config c = {};
+    c.sodaCost = 7;
+    c.numStudents = 10;
+    c.maxPurchases = 5;
+    c.numVendingMachines = 10;
+    c.maxStockPerFlavour = 9;
+    c.maxShippedPerFlavour = 10;
+    c.timeBetweenShipments = 8;
+    c.parentalDelay = 4;
+    c.numCouriers = 2;
+    return c;
+}
+
+void runTest(Config c) {
+    printf(
+        "Running test with:\n"
+        "c.sodaCost = %d;\n"
+        "c.numStudents = %d;\n"
+        "c.maxPurchases = %d;\n"
+        "c.numVendingMachines = %d;\n"
+        "c.maxStockPerFlavour = %d;\n"
+        "c.maxShippedPerFlavour = %d;\n"
+        "c.timeBetweenShipments = %d;\n"
+        "c.parentalDelay = %d;\n"
+        "c.numCouriers = %d;\n\n",
+        c.sodaCost,
+        c.numStudents,
+        c.maxPurchases,
+        c.numVendingMachines,
+        c.maxStockPerFlavour,
+        c.maxShippedPerFlavour,
+        c.timeBetweenShipments,
+        c.parentalDelay,
+        c.numCouriers
+    );
+
+    Main(c);
+}
+
 void uMain::main() {
 //     Config config = genRandConfig();
 //     Config config = oneConfig();
-    Config config = genRandConfig();
+    for (int i = 0; i < 10000; i++) {
+        Config config = genRandConfig();
 
-    printf(
-        "Running test with:\n"
-        "sodaCost %d, "
-        "numStudents %d, "
-        "maxPurchases %d, "
-        "numVendingMachines %d, "
-        "maxStockPerFlavour %d, "
-        "maxShippedPerFlavour %d, "
-        "timeBetweenShipments %d, "
-        "parentalDelay %d, "
-        "numCouriers %d\n",
-        config.sodaCost,
-        config.numStudents,
-        config.maxPurchases,
-        config.numVendingMachines,
-        config.maxStockPerFlavour,
-        config.maxShippedPerFlavour,
-        config.timeBetweenShipments,
-        config.parentalDelay,
-        config.numCouriers
-    );
-
-    Main(config);
+        runTest(config);
+        if (i % 100 == 0) {
+            fprintf(stderr, "Iteration %d\n", i);
+        }
+    }
+//     Config c = badConfig1();
+//     runTest(c);
     //RunAllTests(*this);
 }
