@@ -10,7 +10,7 @@ void argErr(char *argv0) {
 }
 
 void p(const char* line) {
-    printf("%s\n", line);
+    std::cout << line << std::endl;
 }
 
 void run(int cost, int students, int purchases, int machines, int stock, 
@@ -53,8 +53,8 @@ void testdocs() {
 }
 
 void uMain::main() {
-    //testdocs();
-    //return;
+    testdocs();
+    return;
 
     std::string configName = "soda.config";
     int seed = getpid();

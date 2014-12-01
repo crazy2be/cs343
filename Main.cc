@@ -13,27 +13,18 @@
 #include <iostream>
 
 void runTest(Config c) {
-    printf(
+    std::cout << 
         "Running test with:\n"
-        "c.sodaCost = %d;\n"
-        "c.numStudents = %d;\n"
-        "c.maxPurchases = %d;\n"
-        "c.numVendingMachines = %d;\n"
-        "c.maxStockPerFlavour = %d;\n"
-        "c.maxShippedPerFlavour = %d;\n"
-        "c.timeBetweenShipments = %d;\n"
-        "c.parentalDelay = %d;\n"
-        "c.numCouriers = %d;\n\n",
-        c.sodaCost,
-        c.numStudents,
-        c.maxPurchases,
-        c.numVendingMachines,
-        c.maxStockPerFlavour,
-        c.maxShippedPerFlavour,
-        c.timeBetweenShipments,
-        c.parentalDelay,
-        c.numCouriers
-    );
+        "c.sodaCost = "<<c.sodaCost<<";\n" <<
+        "c.numStudents = "<<c.numStudents<<";\n" <<
+        "c.maxPurchases = "<<c.maxPurchases<<";\n" <<
+        "c.numVendingMachines = "<<c.numVendingMachines<<";\n" <<
+        "c.maxStockPerFlavour = "<<c.maxStockPerFlavour<<";\n" <<
+        "c.maxShippedPerFlavour = "<<c.maxShippedPerFlavour<<";\n" <<
+        "c.timeBetweenShipments = "<<c.timeBetweenShipments<<";\n" <<
+        "c.parentalDelay = "<<c.parentalDelay<<";\n" <<
+        "c.numCouriers = "<<c.numCouriers<<";\n\n"
+    ;
 
     Main(c);
 }
