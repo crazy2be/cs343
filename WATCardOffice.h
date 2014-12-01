@@ -30,11 +30,10 @@ _Task WATCardOffice {
             : printer(printer), office(office), bank(bank) {}
     };
 
+    // We are only friends because courierDone.
+    friend class Courier;
     qqSemaphore couriersDone;
-public:
-    void courierDone(){
-        couriersDone.release();
-    }
+    _Mutex void courierDone() { couriersDone.release(); }
 
 private:
     std::vector<Courier*> couriers;

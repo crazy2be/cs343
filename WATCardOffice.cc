@@ -36,10 +36,8 @@ WATCardOffice::~WATCardOffice() {
     for (int ix = 0; ix < (int)couriers.size(); ix++) {
         jobs.push(NULL);
         jobsReady.release();
+        couriersDone.acquire();
     }
-
-    couriersDone.withdraw((int)couriers.size());
-
     for (int ix = 0; ix < (int)couriers.size(); ix++) {
         delete couriers[ix];
     }
@@ -60,7 +58,6 @@ WATCard::FWATCard WATCardOffice::transfer(int sid, int amount, WATCard *card) {
     jobsReady.release();
 
     printer.print(PrinterKind::WATCardOffice, 'T', sid, amount);
-    
     return fcard;
 }
 WATCardOffice::Job *WATCardOffice::requestWork() {
