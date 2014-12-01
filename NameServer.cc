@@ -19,21 +19,17 @@ static int mod(int num, int base) {
     return ((num % base) + base) % base;
 }
 
-VendingMachine* NameServer::getMachine(int sid) {
+VendingMachine *NameServer::getMachine(int sid) {
     dassert(numVendingMachines == (int)vendingMachines.size());
     int vid = studentMachines[sid];
-
     studentMachines[sid] = mod(vid + 1, numVendingMachines);
-    printer.print(PrinterKind::NameServer, 'N', sid, vid);
-
     dassert(vid >= 0 && vid < (int)vendingMachines.size());
+    printer.print(PrinterKind::NameServer, 'N', sid, vid);
     return vendingMachines[vid];
 }
 
-VendingMachine ** NameServer::getMachineList() {
+VendingMachine **NameServer::getMachineList() {
     return vendingMachines.data();
 }
 
-void NameServer::main() {
-
-}
+void NameServer::main() {}

@@ -54,7 +54,6 @@ void Printer::printInternal(PrinterKind kind, int id, char statec, int value1, i
 Printer::~Printer() {
     if(tests) return;
     cout << "***********************" << endl;
-    printf("Printer destructor\n");
 }
 void Printer::reset() {
     for (int i = 0; i < (int)states.size(); i++) {
@@ -82,20 +81,25 @@ PrinterKind Printer::kind(int statesIndex) {
     dassert(false); // i out of range...
 }
 int PrintState::numVals(PrinterKind kind) {
-    const static string NO_VALUE = "FWPLrR";
-    const static string ONE_VALUE = "RPGVB";
+    const static string NO_VALUE = "FWPLr";
+    const static string ONE_VALUE = "PGVB";
     const static string TWO_VALUE = "DCTNdUDBt";
     if (NO_VALUE.find(statec) != string::npos) return 0;
     else if (ONE_VALUE.find(statec) != string::npos) return 1;
     else if (TWO_VALUE.find(statec) != string::npos) return 2;
-    else {
-        dassert(statec == 'S');
+    else if (statec == 'S') {
         switch (kind) {
         case PrinterKind::Student: return 2;
         case PrinterKind::VendingMachine: return 1;
         default: return 0;
         }
-    }
+    } else if (statec == 'R') {
+        switch (kind) {
+        case PrinterKind::NameServer: return 1;
+        case PrinterKind::VendingMachine: return 0;
+        default: dassert(false);
+        }
+    } else dassert(false);
 }
 void Printer::flush() {
     for (int i = 0; i < (int)states.size(); i++) {

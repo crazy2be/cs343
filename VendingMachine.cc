@@ -31,6 +31,6 @@ int *VendingMachine::inventory() {
 
 void VendingMachine::restocked() {
     dassert(sodasLock.counter() == 0);
-    sodasLock.release();
     printer.print(PrinterKind::VendingMachine, id, 'R');
+    sodasLock.release();
 }
