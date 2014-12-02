@@ -1,5 +1,6 @@
 #include "Config.h"
 #include "Main.h"
+#include "MPRNG.h"
 
 #include <iostream>
 
@@ -26,12 +27,13 @@ void run(int cost, int students, int purchases, int machines, int stock,
     config.parentalDelay = parentDelay;
     config.numCouriers = couriers;
 
-    srand(2340872340);
+    mprng.seed(2340872340);
     runTest(config);
 }
 
 void testdocs() {
-    p("Simplest possible test case");
+    p("Simplest possible test case. Make sure things are at least working in a");
+    p("basic capacity.");
     //cost, students, purchases, machines, stock, shipSize, shipTime, parentDelay, couriers
     run(1,     1,         1,        1,      1,        1,       1,          1,          1);
 
@@ -39,7 +41,8 @@ void testdocs() {
     //cost, students, purchases, machines, stock, shipSize, shipTime, parentDelay, couriers
     run(2,     2,         8,        3,      5,        3,       3,          2,          1);
 
-    p("Multiple couriers");
+    p("Multiple couriers (this originally caused a bug in the WATCardOffice");
+    p("shutdown logic)");
     //cost, students, purchases, machines, stock, shipSize, shipTime, parentDelay, couriers
     run(2,     2,         8,        3,      5,        3,       3,          2,          1);
 
@@ -50,8 +53,12 @@ void testdocs() {
     p("Shipping and buying a lot, but with a machine that only holds a little");
     //cost, students, purchases, machines, stock, shipSize, shipTime, parentDelay, couriers
     run(1,     1,         10,        1,      1,        10,       1,          1,          1);
+
+    p("Lots of tasks, to try and find any bugs with interactions between threads");
+    run(1, 10, 1, 10, 10, 10, 1, 1, 10);
 }
 
+MPRNG mprng;
 void uMain::main() {
     testdocs();
     return;
@@ -68,7 +75,7 @@ void uMain::main() {
 
     Config config;
     readConfigFile(configName.c_str(), config);
-    srand(seed);
+    mprng.seed(seed);
 
     Main(config);
 }

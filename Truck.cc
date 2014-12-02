@@ -1,5 +1,6 @@
 #include "Truck.h"
 #include "VendingMachine.h"
+#include "MPRNG.h"
 
 #include <vector>
 
@@ -14,7 +15,7 @@ void Truck::main() {
     int nextMachine = 0;
 
     while (true) {
-        yield((rand() % 11) + 1);
+        yield((mprng() % 11) + 1);
         try {
             plant.getShipment(cargo.data());
             printer.print(PrinterKind::Truck, 'P', sum(cargo));

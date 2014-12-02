@@ -2,6 +2,7 @@
 #include "VendingMachine.h"
 #include "WATCard.h"
 #include "debug.h"
+#include "MPRNG.h"
 
 // If the card is lost, we will retry until it is created, but if it is lost
 // once we will only add 5 dollars to it (cause the spec is strange)
@@ -32,9 +33,9 @@ VendingMachine *Student::nextMachine() {
 }
 
 void Student::main() {
-    int quantity = (rand() % maxPurchases) + 1;
+    int quantity = (mprng() % maxPurchases) + 1;
     VendingMachine::Flavours favourite =
-        (VendingMachine::Flavours)(rand() % VendingMachine::Flavours_COUNT);
+        (VendingMachine::Flavours)(mprng() % VendingMachine::Flavours_COUNT);
     printer.print(PrinterKind::Student, sid, 'S', favourite, quantity);
 
     VendingMachine *machine = nextMachine();
@@ -57,7 +58,7 @@ void Student::main() {
             transferWithRetry(card, funds.cost + 5);
         }
         // *drinks soda, or maybe just sadness*
-        yield((rand() % 11) + 1);
+        yield((mprng() % 11) + 1);
     }
 
     delete card;

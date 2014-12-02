@@ -1,4 +1,5 @@
 #include "WATCardOffice.h"
+#include "MPRNG.h"
 #include "debug.h"
 
 void WATCardOffice::Courier::main() {
@@ -12,7 +13,7 @@ void WATCardOffice::Courier::main() {
         printer.print(PrinterKind::Courier, 'T', job->sid, job->amount);
 
         //1 in 6 chance to lose it
-        if ((rand() % 6) == 0) {
+        if ((mprng() % 6) == 0) {
             //Lose it
             delete job->card;
             job->result.exception(new WATCardOffice::Lost());

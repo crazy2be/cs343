@@ -5,12 +5,11 @@
 #include "UnitTests.h"
 
 #include "Bank.h"
-
 #include "Printer.h"
-#include "debug.h"
-
 #include "Config.h"
 #include "Main.h"
+#include "MPRNG.h"
+#include "debug.h"
 
 using namespace std;
 
@@ -76,15 +75,15 @@ void RunAllTests(uBaseTask &task) {
 
 Config genRandConfig() {
     Config config;
-    config.sodaCost = rand() % 10 + 1;
-    config.numStudents = rand() % 10 + 1;
-    config.maxPurchases = rand() % 10 + 1;
-    config.numVendingMachines = rand() % 10 + 1;
-    config.maxStockPerFlavour = rand() % 10 + 1;
-    config.maxShippedPerFlavour = rand() % 10 + 1;
-    config.timeBetweenShipments = rand() % 10 + 1;
-    config.parentalDelay = rand() % 10 + 1;
-    config.numCouriers = rand() % 10 + 1;
+    config.sodaCost = mprng() % 10 + 1;
+    config.numStudents = mprng() % 10 + 1;
+    config.maxPurchases = mprng() % 10 + 1;
+    config.numVendingMachines = mprng() % 10 + 1;
+    config.maxStockPerFlavour = mprng() % 10 + 1;
+    config.maxShippedPerFlavour = mprng() % 10 + 1;
+    config.timeBetweenShipments = mprng() % 10 + 1;
+    config.parentalDelay = mprng() % 10 + 1;
+    config.numCouriers = mprng() % 10 + 1;
     return config;
 }
 
