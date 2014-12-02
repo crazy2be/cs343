@@ -50,9 +50,9 @@ PrinterKind Printer::kind(int statesIndex) {
     dassert(false); // i out of range...
 }
 int PrintState::numVals(PrinterKind kind) {
-    const static string NO_VALUE = "FWPLr";
-    const static string ONE_VALUE = "PGVB";
-    const static string TWO_VALUE = "DCTNdUDBt";
+    const static string NO_VALUE = "FWLr";
+    const static string ONE_VALUE = "GV";
+    const static string TWO_VALUE = "DCTNdUt";
     if (NO_VALUE.find(statec) != string::npos) return 0;
     else if (ONE_VALUE.find(statec) != string::npos) return 1;
     else if (TWO_VALUE.find(statec) != string::npos) return 2;
@@ -63,6 +63,14 @@ int PrintState::numVals(PrinterKind kind) {
     } else if (statec == 'R') switch (kind) {
         case PrinterKind::NameServer: return 1;
         case PrinterKind::VendingMachine: return 0;
+        default: break;
+    } else if (statec == 'B') switch (kind) {
+        case PrinterKind::Student: return 1;
+        case PrinterKind::VendingMachine: return 2;
+        default: break;
+    } else if (statec == 'P') switch (kind) {
+        case PrinterKind::Truck: return 1;
+        case PrinterKind::BottlingPlant: return 0;
         default: break;
     }
     dassert(false);
